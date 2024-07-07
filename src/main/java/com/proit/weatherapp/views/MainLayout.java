@@ -2,8 +2,9 @@ package com.proit.weatherapp.views;
 
 import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.security.AuthenticatedUser;
-import com.proit.weatherapp.views.about.AboutView;
-import com.proit.weatherapp.views.helloworld.HelloWorldView;
+import com.proit.weatherapp.views.favourite.Favourite;
+import com.proit.weatherapp.views.search.SearchView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -19,12 +20,17 @@ import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
+import com.vaadin.flow.i18n.I18NProvider;
+import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
+
 import java.io.ByteArrayInputStream;
+import java.util.Locale;
 import java.util.Optional;
+
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 /**
@@ -34,12 +40,16 @@ public class MainLayout extends AppLayout {
 
     private H1 viewTitle;
 
-    private AuthenticatedUser authenticatedUser;
-    private AccessAnnotationChecker accessChecker;
+    private final I18NProvider i18NProvider;
+    private final AuthenticatedUser authenticatedUser;
+    private final AccessAnnotationChecker accessChecker;
+    private final Locale locale;
 
-    public MainLayout(AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
+    public MainLayout(I18NProvider i18NProvider, AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
+        this.i18NProvider = i18NProvider;
         this.authenticatedUser = authenticatedUser;
         this.accessChecker = accessChecker;
+        this.locale = UI.getCurrent().getLocale();
 
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
@@ -57,7 +67,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void addDrawerContent() {
-        Span appName = new Span("WeatherApp");
+        Span appName = new Span(i18NProvider.getTranslation("app.name", locale));
         appName.addClassNames(LumoUtility.FontWeight.SEMIBOLD, LumoUtility.FontSize.LARGE);
         Header header = new Header(appName);
 
@@ -69,13 +79,11 @@ public class MainLayout extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        if (accessChecker.hasAccess(HelloWorldView.class)) {
-            nav.addItem(new SideNavItem("Hello World", HelloWorldView.class, LineAwesomeIcon.GLOBE_SOLID.create()));
-
+        if (accessChecker.hasAccess(SearchView.class)) {
+            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.search", locale), SearchView.class, LineAwesomeIcon.SEARCH_SOLID.create()));
         }
-        if (accessChecker.hasAccess(AboutView.class)) {
-            nav.addItem(new SideNavItem("About", AboutView.class, LineAwesomeIcon.FILE.create()));
-
+        if (accessChecker.hasAccess(Favourite.class)) {
+            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.favourite", locale), Favourite.class, LineAwesomeIcon.STAR_SOLID.create()));
         }
 
         return nav;
@@ -89,9 +97,9 @@ public class MainLayout extends AppLayout {
             User user = maybeUser.get();
 
             Avatar avatar = new Avatar(user.getName());
-            StreamResource resource = new StreamResource("profile-pic",
-                    () -> new ByteArrayInputStream(user.getProfilePicture()));
-            avatar.setImageResource(resource);
+            StreamResource streamResource = new StreamResource("profile-pic", () -> new ByteArrayInputStream(user.getProfilePicture()));
+
+            avatar.setImageResource(streamResource);
             avatar.setThemeName("xsmall");
             avatar.getElement().setAttribute("tabindex", "-1");
 
@@ -107,7 +115,7 @@ public class MainLayout extends AppLayout {
             div.getElement().getStyle().set("align-items", "center");
             div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
             userName.add(div);
-            userName.getSubMenu().addItem("Sign out", e -> {
+            userName.getSubMenu().addItem(i18NProvider.getTranslation("sign.out", locale), menuItemClickEvent -> {
                 authenticatedUser.logout();
             });
 
@@ -127,7 +135,16 @@ public class MainLayout extends AppLayout {
     }
 
     private String getCurrentPageTitle() {
-        PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
-        return title == null ? "" : title.value();
+        if (getContent() == null) {
+            return "";
+        } else if (getContent() instanceof HasDynamicTitle titleHolder) {
+            return titleHolder.getPageTitle();
+        } else {
+            var annotation = getContent().getClass().getAnnotation(PageTitle.class);
+            if (annotation != null) {
+                return annotation.value();
+            }
+        }
+        return "";
     }
 }

@@ -2,7 +2,11 @@ package com.proit.weatherapp.entity;
 
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "t_user_role")
 public class UserRole extends AbstractEntity {
@@ -13,20 +17,4 @@ public class UserRole extends AbstractEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
 }

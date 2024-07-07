@@ -1,8 +1,10 @@
 package com.proit.weatherapp.views.login;
 
 import com.proit.weatherapp.security.AuthenticatedUser;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
+import com.vaadin.flow.i18n.I18NProvider;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
@@ -11,21 +13,28 @@ import com.vaadin.flow.router.internal.RouteUtil;
 import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
+import java.util.Locale;
+
 @AnonymousAllowed
 @PageTitle("Login")
 @Route(value = "login")
 public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
+    private final I18NProvider i18NProvider;
     private final AuthenticatedUser authenticatedUser;
 
-    public LoginView(AuthenticatedUser authenticatedUser) {
+    public LoginView(I18NProvider i18NProvider, AuthenticatedUser authenticatedUser) {
+        this.i18NProvider = i18NProvider;
         this.authenticatedUser = authenticatedUser;
+
         setAction(RouteUtil.getRoutePath(VaadinService.getCurrent().getContext(), getClass()));
+
+        Locale locale = UI.getCurrent().getLocale();
+        String appName = i18NProvider.getTranslation("app.name", locale);
 
         LoginI18n i18n = LoginI18n.createDefault();
         i18n.setHeader(new LoginI18n.Header());
-        i18n.getHeader().setTitle("WeatherApp");
-        i18n.getHeader().setDescription("Login using user/user or admin/admin");
+        i18n.getHeader().setTitle(appName);
         i18n.setAdditionalInformation(null);
         setI18n(i18n);
 
