@@ -16,13 +16,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
-public class DataGeneratingService {
-    private static final Logger logger = LoggerFactory.getLogger(DataGeneratingService.class);
+public class DataInitializer {
+    private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
 
     private final UserRepository userRepository;
 
-    public DataGeneratingService(UserRepository userRepository) {
+    public DataInitializer(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
