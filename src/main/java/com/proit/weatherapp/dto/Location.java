@@ -3,6 +3,7 @@ package com.proit.weatherapp.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.commons.lang3.StringUtils;
 
 @Setter
 @Getter
@@ -20,4 +21,9 @@ public class Location {
     private String admin3;
     private String admin4;
     private String timezone;
+
+    public String getCountry() {
+        // This method is used in comparator, returning empty string instead of null to avoid NullPointerException
+        return StringUtils.isAllBlank(country) ? StringUtils.EMPTY : country;
+    }
 }
