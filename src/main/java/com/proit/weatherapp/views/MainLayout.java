@@ -2,8 +2,9 @@ package com.proit.weatherapp.views;
 
 import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.security.AuthenticatedUser;
+import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.favourite.Favourite;
-import com.proit.weatherapp.views.search.SearchView;
+import com.proit.weatherapp.views.search.LocationView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -21,8 +22,6 @@ import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.component.sidenav.SideNav;
 import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.i18n.I18NProvider;
-import com.vaadin.flow.router.HasDynamicTitle;
-import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
@@ -79,8 +78,8 @@ public class MainLayout extends AppLayout {
     private SideNav createNavigation() {
         SideNav nav = new SideNav();
 
-        if (accessChecker.hasAccess(SearchView.class)) {
-            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.search", locale), SearchView.class, LineAwesomeIcon.SEARCH_SOLID.create()));
+        if (accessChecker.hasAccess(LocationView.class)) {
+            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.search", locale), LocationView.class, LineAwesomeIcon.LOCATION_ARROW_SOLID.create()));
         }
         if (accessChecker.hasAccess(Favourite.class)) {
             nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.favourite", locale), Favourite.class, LineAwesomeIcon.STAR_SOLID.create()));
@@ -131,20 +130,7 @@ public class MainLayout extends AppLayout {
     @Override
     protected void afterNavigation() {
         super.afterNavigation();
-        viewTitle.setText(getCurrentPageTitle());
+        viewTitle.setText(Utils.getCurrentPageTitle(getContent()));
     }
 
-    private String getCurrentPageTitle() {
-        if (getContent() == null) {
-            return "";
-        } else if (getContent() instanceof HasDynamicTitle titleHolder) {
-            return titleHolder.getPageTitle();
-        } else {
-            var annotation = getContent().getClass().getAnnotation(PageTitle.class);
-            if (annotation != null) {
-                return annotation.value();
-            }
-        }
-        return "";
-    }
 }

@@ -23,7 +23,7 @@ class CustomErrorHandler implements ErrorHandler {
     private void showError(String error) {
         Optional.ofNullable(UI.getCurrent()).ifPresent(ui -> ui.access(() -> {
             var notification = Notification.show(error);
-            notification.setPosition(Notification.Position.MIDDLE);
+            notification.setPosition(Notification.Position.TOP_CENTER);
             notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
         }));
     }

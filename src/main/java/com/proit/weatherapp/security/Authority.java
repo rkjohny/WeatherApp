@@ -1,10 +1,19 @@
 package com.proit.weatherapp.security;
 
-public class Authority {
+import com.proit.weatherapp.entity.Role;
+
+public final class Authority {
 
     private Authority() {
     }
 
-    private static final String USER = "ROLE_USER";
-    private static final String ADMIN = "ROLE_ADMIN";
+    public static final String USER = "ROLE_USER";
+    public static final String ADMIN = "ROLE_ADMIN";
+
+    public static String getAuthority(Role role) {
+        return switch (role) {
+            case Role.USER -> Authority.USER;
+            case Role.ADMIN -> Authority.ADMIN;
+        };
+    }
 }

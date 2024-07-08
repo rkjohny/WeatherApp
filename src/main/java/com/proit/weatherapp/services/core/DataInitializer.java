@@ -1,4 +1,4 @@
-package com.proit.weatherapp.services;
+package com.proit.weatherapp.services.core;
 
 import com.proit.weatherapp.entity.Role;
 import com.proit.weatherapp.entity.User;
