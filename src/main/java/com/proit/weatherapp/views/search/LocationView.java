@@ -21,6 +21,8 @@ import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
@@ -38,6 +40,7 @@ import java.util.List;
 @RouteAlias(value = "", layout = MainLayout.class)
 @PermitAll
 public class LocationView extends VerticalLayout {
+    private static final Logger logger = LoggerFactory.getLogger(LocationView.class);
 
     private final LocationService locationService;
     private final I18NProvider i18NProvider;
@@ -87,7 +90,7 @@ public class LocationView extends VerticalLayout {
             byte[] flagData = Files.readAllBytes(path);
             streamResource = new StreamResource(flagFileName, () -> new ByteArrayInputStream(flagData));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            logger.warn("Failed to retrieve flag for country. [{}]", e.getMessage());
         }
 
         avatar.setImageResource(streamResource);
