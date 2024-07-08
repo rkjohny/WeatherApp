@@ -13,6 +13,7 @@ public class JacksonConfiguration {
 
     /**
      * Support for Java date and time API.
+     *
      * @return the corresponding Jackson module.
      */
     @Bean
@@ -29,11 +30,11 @@ public class JacksonConfiguration {
         JavaTimeModule module = new JavaTimeModule();
 
         return new Jackson2ObjectMapperBuilder()
-            .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
-            .findModulesViaServiceLoader(true)
-            .modulesToInstall(module)
-            .failOnEmptyBeans(false)
-            .failOnUnknownProperties(false);
+                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .findModulesViaServiceLoader(true)
+                .modulesToInstall(module)
+                .failOnEmptyBeans(false)
+                .failOnUnknownProperties(false);
     }
 
     @Bean

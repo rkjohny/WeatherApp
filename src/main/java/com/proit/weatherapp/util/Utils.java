@@ -10,7 +10,8 @@ import java.util.Map;
 
 public final class Utils {
 
-    private Utils() {}
+    private Utils() {
+    }
 
     public static String getCurrentPageTitle(Component component) {
         if (component == null) {

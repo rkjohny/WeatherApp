@@ -1,6 +1,7 @@
-package com.proit.weatherapp.entity;
+package com.proit.weatherapp.repository;
 
 
+import com.proit.weatherapp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 

@@ -22,10 +22,9 @@ public class Favourite extends VerticalLayout {
         img.setWidth("200px");
         add(img);
 
-        H2 header = new H2("This place intentionally left empty");
+        H2 header = new H2("Not Implemented Yet.");
         header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
         add(header);
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);

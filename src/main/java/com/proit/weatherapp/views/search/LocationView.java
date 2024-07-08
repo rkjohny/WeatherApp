@@ -61,9 +61,7 @@ public class LocationView extends VerticalLayout {
         addClassName("list-view");
         setSizeFull();
         configureGrid();
-
         add(getToolbar(), getContent());
-
         updateGrid();
     }
 
@@ -71,7 +69,7 @@ public class LocationView extends VerticalLayout {
         locationGrid.addClassNames("location-grid");
         locationGrid.setSizeFull();
 
-        locationGrid.setColumns( "name", "latitude", "longitude", "elevation", "admin1");
+        locationGrid.setColumns("name", "latitude", "longitude", "elevation", "admin1");
         locationGrid.addComponentColumn(this::addCountryFlag).setHeader("Country").setSortable(true).setComparator(Comparator.comparing(Location::getCountry));
         locationGrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
@@ -95,13 +93,6 @@ public class LocationView extends VerticalLayout {
         avatar.setImageResource(streamResource);
         avatar.setThemeName("xsmall");
         avatar.getElement().setAttribute("tabindex", "-1");
-
-        /*
-        Span text = new Span(location.getCountry());
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.add(avatar, text);
-        return layout;
-        */
 
         Div div = new Div();
         div.add(avatar);
@@ -147,9 +138,8 @@ public class LocationView extends VerticalLayout {
         String prevButtonText = i18NProvider.getTranslation("button.prev", getLocale());
         String nextButtonText = i18NProvider.getTranslation("button.next", getLocale());
 
-        prevButton = new Button(prevButtonText, buttonClickEvent -> navigateToPage(currentPage -1));
+        prevButton = new Button(prevButtonText, buttonClickEvent -> navigateToPage(currentPage - 1));
         nextButton = new Button(nextButtonText, buttonClickEvent -> navigateToPage(currentPage + 1));
-
         pageInfoSpan.addClassNames(LumoUtility.Padding.SMALL);
 
         HorizontalLayout paginationControls = new HorizontalLayout(prevButton, pageInfoSpan, nextButton);
@@ -184,7 +174,6 @@ public class LocationView extends VerticalLayout {
     private void updateGrid() {
         List<Location> results = getSearchResults(currentPage);
         locationGrid.setItems(results);
-
         // Update button states
         prevButton.setEnabled(totalPage > 1 && currentPage > 0);
         nextButton.setEnabled(totalPage > 1 && currentPage < totalPage - 1);
@@ -193,7 +182,6 @@ public class LocationView extends VerticalLayout {
     }
 
     private List<Location> getSearchResults(int page) {
-        // Simulate fetching data from a data source
         List<Location> allResults = getAllSearchResults();
         totalPage = (int) Math.ceil(((double) allResults.size()) / PAGE_SIZE);
         int start = page * PAGE_SIZE;

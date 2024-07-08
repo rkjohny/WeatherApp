@@ -1,7 +1,8 @@
 package com.proit.weatherapp.security;
 
 import com.proit.weatherapp.entity.User;
-import com.proit.weatherapp.entity.UserRepository;
+import com.proit.weatherapp.repository.UserRepository;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

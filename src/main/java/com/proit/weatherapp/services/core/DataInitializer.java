@@ -2,7 +2,7 @@ package com.proit.weatherapp.services.core;
 
 import com.proit.weatherapp.entity.Role;
 import com.proit.weatherapp.entity.User;
-import com.proit.weatherapp.entity.UserRepository;
+import com.proit.weatherapp.repository.UserRepository;
 import com.proit.weatherapp.entity.UserRole;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

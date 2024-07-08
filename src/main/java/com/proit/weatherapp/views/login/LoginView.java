@@ -49,7 +49,6 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
             setOpened(false);
             event.forwardTo("");
         }
-
         setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
     }
 }

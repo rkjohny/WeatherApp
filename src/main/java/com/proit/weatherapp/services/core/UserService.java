@@ -1,8 +1,10 @@
 package com.proit.weatherapp.services.core;
 
 import com.proit.weatherapp.entity.User;
-import com.proit.weatherapp.entity.UserRepository;
+import com.proit.weatherapp.repository.UserRepository;
+
 import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
