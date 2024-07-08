@@ -9,18 +9,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Component
-public class JsonHelper {
-    private static final Logger log = LoggerFactory.getLogger(JsonHelper.class);
+public class JsonService {
+    private static final Logger log = LoggerFactory.getLogger(JsonService.class);
 
     private ObjectMapper objectMapper;
 
-    public JsonHelper(ObjectMapper objectMapper) {
+    public JsonService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
@@ -28,13 +26,6 @@ public class JsonHelper {
         log.warn("JSON error :" + e.getMessage());
     }
 
-    public String createJson(Map.Entry<String, Object>... entries) {
-        Map<String, Object> m = new HashMap<>(entries.length);
-        for (Map.Entry<String, Object> entry : entries) {
-            m.put(entry.getKey(), entry.getValue());
-        }
-        return toJson(m);
-    }
 
     @NotNull
     public String toJson(Object o) {
@@ -67,17 +58,6 @@ public class JsonHelper {
             logError(e);
         }
         return o;
-    }
-
-    @NotNull
-    public String toPrettyJson(Object o) {
-        String json = "";
-        try {
-            json = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
-        } catch (Exception e) {
-            logError(e);
-        }
-        return json;
     }
 
     @Nullable

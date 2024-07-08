@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.security.Authority;
 import com.proit.weatherapp.services.core.GeocodingService;
-import com.proit.weatherapp.services.core.JsonHelper;
+import com.proit.weatherapp.services.core.JsonService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
@@ -16,17 +16,18 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
 @RolesAllowed(value = Authority.USER)
 public class LocationService {
     private static Logger logger = LoggerFactory.getLogger(LocationService.class);
 
     private final GeocodingService geocodingService;
-    private final JsonHelper jsonHelper;
+    private final JsonService jsonService;
 
-    public LocationService(GeocodingService geocodingService, JsonHelper jsonHelper) {
+    public LocationService(GeocodingService geocodingService, JsonService jsonService) {
         this.geocodingService = geocodingService;
-        this.jsonHelper = jsonHelper;
+        this.jsonService = jsonService;
     }
 
     @NotNull
@@ -35,12 +36,14 @@ public class LocationService {
 
         if (!StringUtils.isBlank(city)) {
             String response = geocodingService.getLocationsByCity(city);
-            JsonNode results = jsonHelper.getProperty(response, "results");
+            JsonNode results = jsonService.getProperty(response, "results");
             if (results != null) {
-                locations = jsonHelper.fromJsonToList(results, Location.class);
+                locations.addAll(jsonService.fromJsonToList(results, Location.class));
             }
-            if (!StringUtils.isBlank(filterText) && !locations.isEmpty()) {
-                locations = locations.stream().filter(location -> location.getName().equalsIgnoreCase(filterText)).toList();
+            if (!StringUtils.isBlank(filterText)) {
+                List<Location> filtered = locations.stream().filter(location -> location.getName().equalsIgnoreCase(filterText)).toList();
+                locations.clear();
+                locations.addAll(filtered);
             }
         }
         return locations;
