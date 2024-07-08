@@ -72,7 +72,6 @@ public class LocationView extends VerticalLayout {
         locationGrid.setSizeFull();
 
         locationGrid.setColumns( "name", "latitude", "longitude", "elevation", "admin1");
-        //grid.addColumn(location -> location.getCountry()).setHeader("Country");
         locationGrid.addComponentColumn(this::addCountryFlag).setHeader("Country").setSortable(true).setComparator(Comparator.comparing(Location::getCountry));
         locationGrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
