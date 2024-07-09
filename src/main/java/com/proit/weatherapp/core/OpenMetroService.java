@@ -24,6 +24,7 @@ public class OpenMetroService {
 
     public static final int MAX_LOCATION_RESULT = 100;
     public static final int MAX_DAILY_FORECAST_RESULT = 16;
+    public static final int MAX_HOURLY_FORECAST_RESULT = 24;
 
     private final RestTemplate restTemplate;
 
@@ -46,10 +47,10 @@ public class OpenMetroService {
 
 
     @NotNull
-    public String getLocationsByCity(String city) {
+    public String getLocationsByName(String name) {
         // Build URI with query parameters
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(LOCATION_URL)
-                .queryParam(OpenMetroAPIParam.NAME, city)
+                .queryParam(OpenMetroAPIParam.NAME, name)
                 .queryParam(OpenMetroAPIParam.COUNT, MAX_LOCATION_RESULT)
                 .queryParam(OpenMetroAPIParam.LANGUAGE, OpenMetroAPIParamValue.LANGUAGE_EN)
                 .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
@@ -67,7 +68,7 @@ public class OpenMetroService {
 
 
     @NotNull
-    public String getTemperatureDaily(Double latitude, Double longitude, String timeZone) {
+    public String getWeatherDaily(Double latitude, Double longitude, String timeZone) {
         String dailyPram = String.join(",", OpenMetroAPIParamValue.TEMPERATURE_2M_MAX, OpenMetroAPIParamValue.TEMPERATURE_2M_MIN,
                 OpenMetroAPIParamValue.RAIN_SUM, OpenMetroAPIParamValue.WIND_10M_MAX, OpenMetroAPIParamValue.PRECIPITATION_SUM,
                 OpenMetroAPIParamValue.PRECIPITATION_PROB_MEAM, OpenMetroAPIParamValue.SHOWERS_SUM, OpenMetroAPIParamValue.SNOWFALL_SUM);
@@ -76,7 +77,7 @@ public class OpenMetroService {
                 .queryParam(OpenMetroAPIParam.LATITUDE, latitude)
                 .queryParam(OpenMetroAPIParam.LONGITUDE, longitude)
                 .queryParam(OpenMetroAPIParam.TIME_ZONE, timeZone)
-                .queryParam(OpenMetroAPIParam.FORECAST_DAY, MAX_DAILY_FORECAST_RESULT)
+                .queryParam(OpenMetroAPIParam.FORECAST_DAYS, MAX_DAILY_FORECAST_RESULT)
                 .queryParam(OpenMetroAPIParam.DAILY, dailyPram)
                 .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
         URI uri = uriBuilder.build().toUri();
@@ -93,7 +94,7 @@ public class OpenMetroService {
 
 
     @NotNull
-    public String getTemperatureHourly(Double latitude, Double longitude, String timeZone) {
+    public String getWeatherHourly(Double latitude, Double longitude, String timeZone, String date) {
         String hourlyPram = String.join(",", OpenMetroAPIParamValue.TEMPERATURE_2M, OpenMetroAPIParamValue.WIND_10M,
                 OpenMetroAPIParamValue.RAIN, OpenMetroAPIParamValue.PRECIPITATION, OpenMetroAPIParamValue.PRECIPITATION_PROB,
                 OpenMetroAPIParamValue.SHOWERS, OpenMetroAPIParamValue.SNOWFALL);
@@ -103,6 +104,8 @@ public class OpenMetroService {
                 .queryParam(OpenMetroAPIParam.LONGITUDE, longitude)
                 .queryParam(OpenMetroAPIParam.TIME_ZONE, timeZone)
                 .queryParam(OpenMetroAPIParam.HOURLY, hourlyPram)
+                .queryParam(OpenMetroAPIParam.START_DATE, date)
+                .queryParam(OpenMetroAPIParam.END_DATE, date)
                 .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
         URI uri = uriBuilder.build().toUri();
 

@@ -35,7 +35,7 @@ public class LocationService {
         List<Location> locations = new ArrayList<>();
 
         if (!StringUtils.isBlank(city)) {
-            String response = openMetroService.getLocationsByCity(city);
+            String response = openMetroService.getLocationsByName(city);
             JsonNode results = jsonService.getProperty(response, "results");
             if (results != null) {
                 locations.addAll(jsonService.fromJsonToList(results, Location.class));

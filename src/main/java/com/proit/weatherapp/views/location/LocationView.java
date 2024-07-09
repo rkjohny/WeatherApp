@@ -4,7 +4,7 @@ import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.views.MainLayout;
-import com.proit.weatherapp.views.tenperature.daily.TemperatureDailyView;
+import com.proit.weatherapp.views.tenperature.daily.DailyWeatherView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
@@ -157,7 +157,7 @@ public class LocationView extends VerticalLayout {
 
     private void goToDailyTemperatureView(Location location) {
         VaadinSession.getCurrent().setAttribute(Constant.SELECTED_LOCATION_KEY, location);
-        UI.getCurrent().navigate(TemperatureDailyView.class);
+        UI.getCurrent().navigate(DailyWeatherView.class);
     }
 
     private void navigateToPage(int page) {

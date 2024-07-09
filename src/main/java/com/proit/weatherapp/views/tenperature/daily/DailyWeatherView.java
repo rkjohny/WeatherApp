@@ -2,10 +2,10 @@ package com.proit.weatherapp.views.tenperature.daily;
 
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
-import com.proit.weatherapp.dto.TemperatureDaily;
-import com.proit.weatherapp.services.TemperatureService;
+import com.proit.weatherapp.dto.WeatherDataDaily;
+import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.views.MainLayout;
-import com.proit.weatherapp.views.tenperature.hourly.TemperatureHourlyView;
+import com.proit.weatherapp.views.tenperature.hourly.HourlyWeatherView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
@@ -20,20 +20,20 @@ import jakarta.annotation.security.PermitAll;
 import java.util.List;
 
 
-@PageTitle("Daily Temperature")
+@PageTitle("Daily Weather")
 @Route(value = "daily", layout = MainLayout.class)
 @PermitAll
-public class TemperatureDailyView extends VerticalLayout {
+public class DailyWeatherView extends VerticalLayout {
 
     private final I18NProvider i18NProvider;
-    private final TemperatureService temperatureService;
+    private final WeatherService weatherService;
 
     private Location location;
-    private final Grid<TemperatureDaily> temperatureGrid = new Grid<>(TemperatureDaily.class);
+    private final Grid<WeatherDataDaily> temperatureGrid = new Grid<>(WeatherDataDaily.class);
 
-    public TemperatureDailyView(I18NProvider i18NProvider, TemperatureService temperatureService) {
+    public DailyWeatherView(I18NProvider i18NProvider, WeatherService weatherService) {
         this.i18NProvider = i18NProvider;
-        this.temperatureService = temperatureService;
+        this.weatherService = weatherService;
         location = (Location) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_LOCATION_KEY);
 
         addClassName("list-view");
@@ -60,10 +60,10 @@ public class TemperatureDailyView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("daily.temperature.page.header", getLocale(), location.getName()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", getLocale(), location.getName()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
-        toolbar.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit", getLocale())));
+        toolbar.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit", getLocale())));
 
         var layoutUnits = new VerticalLayout();
         layoutUnits.setPadding(false);
@@ -71,10 +71,10 @@ public class TemperatureDailyView extends VerticalLayout {
         layoutUnits.setMargin(false);
         layoutUnits.addClassName(LumoUtility.Padding.Left.LARGE);
 
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.temperature", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.wind", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.precipitation", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.probability", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.temperature", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.wind", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.precipitation", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.probability", getLocale())));
         toolbar.add(layoutUnits);
 
         return toolbar;
@@ -87,17 +87,17 @@ public class TemperatureDailyView extends VerticalLayout {
         return content;
     }
 
-    private void goToHourlyTemperatureView(TemperatureDaily temperatureDaily) {
-        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_DAILY_TEMPERATURE_KEY, temperatureDaily);
-        UI.getCurrent().navigate(TemperatureHourlyView.class);
+    private void goToHourlyTemperatureView(WeatherDataDaily weatherDataDaily) {
+        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_DAILY_TEMPERATURE_KEY, weatherDataDaily);
+        UI.getCurrent().navigate(HourlyWeatherView.class);
     }
 
     private void updateGrid() {
-        List<TemperatureDaily> results = getDailyTemperatureForecast();
+        List<WeatherDataDaily> results = getDailyTemperatureForecast();
         temperatureGrid.setItems(results);
     }
 
-    private List<TemperatureDaily> getDailyTemperatureForecast() {
-        return temperatureService.getDailyTemperature(location.getLatitude(), location.getLongitude(), location.getTimezone());
+    private List<WeatherDataDaily> getDailyTemperatureForecast() {
+        return weatherService.getDailyWeather(location.getLatitude(), location.getLongitude(), location.getTimezone());
     }
 }

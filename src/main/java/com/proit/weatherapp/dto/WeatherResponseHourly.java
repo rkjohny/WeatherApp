@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 @Getter
 @Setter
-public class TemperatureHourlyResponse implements Serializable {
+public class WeatherResponseHourly implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -50,24 +50,24 @@ public class TemperatureHourlyResponse implements Serializable {
 
 
     @NotNull
-    public List<TemperatureHourly> getHourlyList() {
-        List<TemperatureHourly> list = new ArrayList<>();
+    public List<WeatherDataHourly> getHourlyList() {
+        List<WeatherDataHourly> list = new ArrayList<>();
         Optional<Integer> minValue = Stream.of(time.size(), temperature.size(), rain.size(), wind.size(),
                         precipitation.size(), probability.size()).min(Integer::compareTo);
 
         minValue.ifPresent(length -> IntStream.range(0, length).forEach(i -> {
-            TemperatureHourly temperatureHourly = new TemperatureHourly();
-            temperatureHourly.setTime(Utils.checkNull(time.get(i)));
-            temperatureHourly.setTemperature(Utils.checkNull(temperature.get(i)));
-            temperatureHourly.setWind(Utils.checkNull(wind.get(i)));
-            temperatureHourly.setRain(Utils.checkNull(rain.get(i)));
-            temperatureHourly.setPrecipitation(Utils.checkNull(precipitation.get(i)));
-            temperatureHourly.setProbability(Utils.checkNull(probability.get(i)));
-            temperatureHourly.setPrecipitation(Utils.checkNull(precipitation.get(i)));
-            temperatureHourly.setProbability(Utils.checkNull(probability.get(i)));
-            temperatureHourly.setShowers(Utils.checkNull(showers.get(i)));
-            temperatureHourly.setSnowfall(Utils.checkNull(snowfall.get(i)));
-            list.add(temperatureHourly);
+            WeatherDataHourly weatherDataHourly = new WeatherDataHourly();
+            weatherDataHourly.setTime(Utils.checkNull(time.get(i)));
+            weatherDataHourly.setTemperature(Utils.checkNull(temperature.get(i)));
+            weatherDataHourly.setWind(Utils.checkNull(wind.get(i)));
+            weatherDataHourly.setRain(Utils.checkNull(rain.get(i)));
+            weatherDataHourly.setPrecipitation(Utils.checkNull(precipitation.get(i)));
+            weatherDataHourly.setProbability(Utils.checkNull(probability.get(i)));
+            weatherDataHourly.setPrecipitation(Utils.checkNull(precipitation.get(i)));
+            weatherDataHourly.setProbability(Utils.checkNull(probability.get(i)));
+            weatherDataHourly.setShowers(Utils.checkNull(showers.get(i)));
+            weatherDataHourly.setSnowfall(Utils.checkNull(snowfall.get(i)));
+            list.add(weatherDataHourly);
         }));
         return list;
     }

@@ -8,14 +8,15 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class TemperatureHourly implements Serializable {
+public class WeatherDataDaily implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private String time;
-    private Double temperature;
+    private String date;
+    private Double maxTemperature;
+    private Double minTemperature;
     private Double rain;
-    private Double wind;
+    private Double maxWind;
     private Double precipitation;
     private Double probability;
     private Double showers;

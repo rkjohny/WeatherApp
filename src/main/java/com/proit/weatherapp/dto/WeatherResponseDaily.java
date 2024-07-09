@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 @Getter
 @Setter
-public class TemperatureDailyResponse implements Serializable {
+public class WeatherResponseDaily implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -51,22 +51,22 @@ public class TemperatureDailyResponse implements Serializable {
     private List<Double> snowfall = new ArrayList<>();
 
     @NotNull
-    public List<TemperatureDaily> getDailyList() {
-        List<TemperatureDaily> list = new ArrayList<>();
+    public List<WeatherDataDaily> getDailyList() {
+        List<WeatherDataDaily> list = new ArrayList<>();
         Optional<Integer> minValue = Stream.of(date.size(), tempMax.size(), tempMin.size(), rain.size(), wind.size()).min(Integer::compareTo);
 
         minValue.ifPresent(length -> IntStream.range(0, length).forEach(i -> {
-            TemperatureDaily temperatureDaily = new TemperatureDaily();
-            temperatureDaily.setDate(Utils.checkNull(date.get(i)));
-            temperatureDaily.setMaxTemperature(Utils.checkNull(tempMax.get(i)));
-            temperatureDaily.setMinTemperature(Utils.checkNull(tempMin.get(i)));
-            temperatureDaily.setRain(Utils.checkNull(rain.get(i)));
-            temperatureDaily.setMaxWind(Utils.checkNull(wind.get(i)));
-            temperatureDaily.setPrecipitation(Utils.checkNull(precipitation.get(i)));
-            temperatureDaily.setProbability(Utils.checkNull(probability.get(i)));
-            temperatureDaily.setShowers(Utils.checkNull(showers.get(i)));
-            temperatureDaily.setSnowfall(Utils.checkNull(snowfall.get(i)));
-            list.add(temperatureDaily);
+            WeatherDataDaily weatherDataDaily = new WeatherDataDaily();
+            weatherDataDaily.setDate(Utils.checkNull(date.get(i)));
+            weatherDataDaily.setMaxTemperature(Utils.checkNull(tempMax.get(i)));
+            weatherDataDaily.setMinTemperature(Utils.checkNull(tempMin.get(i)));
+            weatherDataDaily.setRain(Utils.checkNull(rain.get(i)));
+            weatherDataDaily.setMaxWind(Utils.checkNull(wind.get(i)));
+            weatherDataDaily.setPrecipitation(Utils.checkNull(precipitation.get(i)));
+            weatherDataDaily.setProbability(Utils.checkNull(probability.get(i)));
+            weatherDataDaily.setShowers(Utils.checkNull(showers.get(i)));
+            weatherDataDaily.setSnowfall(Utils.checkNull(snowfall.get(i)));
+            list.add(weatherDataDaily);
         }));
         return list;
     }
