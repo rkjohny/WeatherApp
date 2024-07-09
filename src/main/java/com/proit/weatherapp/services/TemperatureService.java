@@ -4,6 +4,8 @@ package com.proit.weatherapp.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.proit.weatherapp.dto.TemperatureDaily;
 import com.proit.weatherapp.dto.TemperatureDailyResponse;
+import com.proit.weatherapp.dto.TemperatureHourly;
+import com.proit.weatherapp.dto.TemperatureHourlyResponse;
 import com.proit.weatherapp.security.Authority;
 import com.proit.weatherapp.core.OpenMetroService;
 import com.proit.weatherapp.core.JsonService;
@@ -48,5 +50,23 @@ public class TemperatureService {
         }
         return dailyTemperatureList;
     }
+
+    @NotNull
+    public List<TemperatureHourly> getHourlyTemperature(Double latitude, Double longitude, String timeZone) {
+        List<TemperatureHourly> hourlyTemperatureList = new ArrayList<>();
+
+        if (latitude != null && longitude != null & !StringUtils.isBlank(timeZone)) {
+            String response = openMetroService.getTemperatureDaily(latitude, longitude, timeZone);
+            JsonNode daily = jsonService.getProperty(response, "daily");
+            if (daily != null) {
+                TemperatureHourlyResponse hourlyResponse = (TemperatureHourlyResponse) jsonService.fromJson(daily, TemperatureHourlyResponse.class);
+                if (hourlyResponse != null) {
+                    hourlyTemperatureList.addAll(hourlyResponse.getHourlyList());
+                }
+            }
+        }
+        return hourlyTemperatureList;
+    }
+
 
 }

@@ -2,11 +2,10 @@ package com.proit.weatherapp.core;
 
 
 import com.proit.weatherapp.error.GeocodingException;
-import com.proit.weatherapp.types.OpenMetroParamValue;
-import com.proit.weatherapp.types.LocationParam;
-import com.proit.weatherapp.types.TemperatureDailyParam;
+import com.proit.weatherapp.types.OpenMetroAPIParamValue;
+import com.proit.weatherapp.types.OpenMetroAPIParam;
+import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -21,7 +20,7 @@ import java.util.List;
 @Component
 public class OpenMetroService {
     private static final String LOCATION_URL = "https://geocoding-api.open-meteo.com/v1/search";
-    private static final String TEMPERATURE_DAILY_URL = "https://api.open-meteo.com/v1/forecast";
+    private static final String TEMPERATURE_URL = "https://api.open-meteo.com/v1/forecast";
 
     public static final int MAX_LOCATION_RESULT = 100;
     public static final int MAX_DAILY_FORECAST_RESULT = 16;
@@ -50,10 +49,10 @@ public class OpenMetroService {
     public String getLocationsByCity(String city) {
         // Build URI with query parameters
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(LOCATION_URL)
-                .queryParam(LocationParam.NAME, city)
-                .queryParam(LocationParam.COUNT, MAX_LOCATION_RESULT)
-                .queryParam(LocationParam.LANGUAGE, "en")
-                .queryParam(LocationParam.FORMAT, "json");
+                .queryParam(OpenMetroAPIParam.NAME, city)
+                .queryParam(OpenMetroAPIParam.COUNT, MAX_LOCATION_RESULT)
+                .queryParam(OpenMetroAPIParam.LANGUAGE, OpenMetroAPIParamValue.LANGUAGE_EN)
+                .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
         URI uri = uriBuilder.build().toUri();
 
         // Create the HttpEntity object with headers
@@ -63,21 +62,23 @@ public class OpenMetroService {
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         checkResponse(response, uri, HttpStatus.OK);
         String jsonResponse = response.getBody();
-        return StringUtils.isBlank(jsonResponse) ? StringUtils.EMPTY : jsonResponse;
+        return Utils.checkNull(jsonResponse);
     }
 
 
     @NotNull
     public String getTemperatureDaily(Double latitude, Double longitude, String timeZone) {
-        String dailyPram = String.join(",", OpenMetroParamValue.Daily.TEMP_2M_MAX, OpenMetroParamValue.Daily.TEMP_2M_MIN, OpenMetroParamValue.Daily.RAIN_SUM, OpenMetroParamValue.Daily.WIND_10M_MAX);
+        String dailyPram = String.join(",", OpenMetroAPIParamValue.TEMPERATURE_2M_MAX, OpenMetroAPIParamValue.TEMPERATURE_2M_MIN,
+                OpenMetroAPIParamValue.RAIN_SUM, OpenMetroAPIParamValue.WIND_10M_MAX, OpenMetroAPIParamValue.PRECIPITATION_SUM,
+                OpenMetroAPIParamValue.PRECIPITATION_PROB_MEAM, OpenMetroAPIParamValue.SHOWERS_SUM, OpenMetroAPIParamValue.SNOWFALL_SUM);
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TEMPERATURE_DAILY_URL)
-                .queryParam(TemperatureDailyParam.LATITUDE, latitude)
-                .queryParam(TemperatureDailyParam.LONGITUDE, longitude)
-                .queryParam(TemperatureDailyParam.TIME_ZONE, timeZone)
-                .queryParam(TemperatureDailyParam.FORECAST_DAY, MAX_DAILY_FORECAST_RESULT)
-                .queryParam(TemperatureDailyParam.DAILY, dailyPram)
-                .queryParam(TemperatureDailyParam.FORMAT, "json");
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TEMPERATURE_URL)
+                .queryParam(OpenMetroAPIParam.LATITUDE, latitude)
+                .queryParam(OpenMetroAPIParam.LONGITUDE, longitude)
+                .queryParam(OpenMetroAPIParam.TIME_ZONE, timeZone)
+                .queryParam(OpenMetroAPIParam.FORECAST_DAY, MAX_DAILY_FORECAST_RESULT)
+                .queryParam(OpenMetroAPIParam.DAILY, dailyPram)
+                .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
         URI uri = uriBuilder.build().toUri();
 
         // Create the HttpEntity object with headers
@@ -87,6 +88,31 @@ public class OpenMetroService {
         ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
         checkResponse(response, uri, HttpStatus.OK);
         String jsonResponse = response.getBody();
-        return StringUtils.isBlank(jsonResponse) ? StringUtils.EMPTY : jsonResponse;
+        return Utils.checkNull(jsonResponse);
+    }
+
+
+    @NotNull
+    public String getTemperatureHourly(Double latitude, Double longitude, String timeZone) {
+        String hourlyPram = String.join(",", OpenMetroAPIParamValue.TEMPERATURE_2M, OpenMetroAPIParamValue.WIND_10M,
+                OpenMetroAPIParamValue.RAIN, OpenMetroAPIParamValue.PRECIPITATION, OpenMetroAPIParamValue.PRECIPITATION_PROB,
+                OpenMetroAPIParamValue.SHOWERS, OpenMetroAPIParamValue.SNOWFALL);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TEMPERATURE_URL)
+                .queryParam(OpenMetroAPIParam.LATITUDE, latitude)
+                .queryParam(OpenMetroAPIParam.LONGITUDE, longitude)
+                .queryParam(OpenMetroAPIParam.TIME_ZONE, timeZone)
+                .queryParam(OpenMetroAPIParam.HOURLY, hourlyPram)
+                .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
+        URI uri = uriBuilder.build().toUri();
+
+        // Create the HttpEntity object with headers
+        HttpEntity<String> entity = new HttpEntity<>(generateHeaders());
+
+        // Make the GET request
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+        checkResponse(response, uri, HttpStatus.OK);
+        String jsonResponse = response.getBody();
+        return Utils.checkNull(jsonResponse);
     }
 }

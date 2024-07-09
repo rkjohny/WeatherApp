@@ -18,7 +18,7 @@ import jakarta.annotation.security.PermitAll;
 import java.util.List;
 
 
-@PageTitle("Temperature Daily")
+@PageTitle("Daily Temperature")
 @Route(value = "daily", layout = MainLayout.class)
 @PermitAll
 public class TemperatureDailyView extends VerticalLayout {
@@ -45,7 +45,7 @@ public class TemperatureDailyView extends VerticalLayout {
         temperatureGrid.addClassNames("location-grid");
         temperatureGrid.setSizeFull();
 
-        temperatureGrid.setColumns("date", "maxTemperature", "minTemperature", "rain", "maxWind");
+        temperatureGrid.setColumns("date", "maxTemperature", "minTemperature", "precipitation", "probability", "maxWind");
         temperatureGrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         temperatureGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToHourlyTemperatureView(valueChangeEvent.getValue()));
@@ -59,7 +59,7 @@ public class TemperatureDailyView extends VerticalLayout {
         toolbar.addClassName(LumoUtility.Padding.Left.MEDIUM);
 
         Span pageHeader = new Span(i18NProvider.getTranslation("daily.temperature.page.header", getLocale(), location.getName()));
-        pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
+        pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
         toolbar.add(pageHeader);
         toolbar.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit", getLocale())));
 
@@ -70,8 +70,9 @@ public class TemperatureDailyView extends VerticalLayout {
         layoutUnits.addClassName(LumoUtility.Padding.Left.LARGE);
 
         layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.temperature", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.rain", getLocale())));
         layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.wind", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.precipitation", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit.probability", getLocale())));
         toolbar.add(layoutUnits);
 
         return toolbar;

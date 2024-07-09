@@ -1,6 +1,7 @@
 package com.proit.weatherapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proit.weatherapp.types.OpenMetroAPIParamValue;
 import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,19 +26,29 @@ public class TemperatureDailyResponse implements Serializable {
     @JsonProperty(value = "time")
     private List<String> date = new ArrayList<>();
 
-    @JsonProperty(value = "temperature_2m_max")
+    @JsonProperty(value = OpenMetroAPIParamValue.TEMPERATURE_2M_MAX)
     private List<Double> tempMax = new ArrayList<>();
 
-    @JsonProperty(value = "temperature_2m_min")
+    @JsonProperty(value = OpenMetroAPIParamValue.TEMPERATURE_2M_MIN)
     private List<Double> tempMin = new ArrayList<>();
 
-    @JsonProperty(value = "rain_sum")
+    @JsonProperty(value = OpenMetroAPIParamValue.RAIN_SUM)
     private List<Double> rain = new ArrayList<>();
 
-    @JsonProperty(value = "wind_speed_10m_max")
+    @JsonProperty(value = OpenMetroAPIParamValue.WIND_10M_MAX)
     private List<Double> wind = new ArrayList<>();
 
+    @JsonProperty(value = OpenMetroAPIParamValue.PRECIPITATION_SUM)
+    private List<Double> precipitation = new ArrayList<>();
 
+    @JsonProperty(value = OpenMetroAPIParamValue.PRECIPITATION_PROB_MEAM)
+    private List<Double> probability = new ArrayList<>();
+
+    @JsonProperty(value = OpenMetroAPIParamValue.SHOWERS_SUM)
+    private List<Double> showers = new ArrayList<>();
+
+    @JsonProperty(value = OpenMetroAPIParamValue.SNOWFALL_SUM)
+    private List<Double> snowfall = new ArrayList<>();
 
     @NotNull
     public List<TemperatureDaily> getDailyList() {
@@ -51,6 +62,10 @@ public class TemperatureDailyResponse implements Serializable {
             temperatureDaily.setMinTemperature(Utils.checkNull(tempMin.get(i)));
             temperatureDaily.setRain(Utils.checkNull(rain.get(i)));
             temperatureDaily.setMaxWind(Utils.checkNull(wind.get(i)));
+            temperatureDaily.setPrecipitation(Utils.checkNull(precipitation.get(i)));
+            temperatureDaily.setProbability(Utils.checkNull(probability.get(i)));
+            temperatureDaily.setShowers(Utils.checkNull(showers.get(i)));
+            temperatureDaily.setSnowfall(Utils.checkNull(snowfall.get(i)));
             list.add(temperatureDaily);
         }));
         return list;
