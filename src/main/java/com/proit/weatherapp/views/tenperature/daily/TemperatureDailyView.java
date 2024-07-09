@@ -58,10 +58,10 @@ public class TemperatureDailyView extends VerticalLayout {
         toolbar.setPadding(false);
         toolbar.setSpacing(false);
         toolbar.setMargin(false);
-        toolbar.addClassName(LumoUtility.Padding.Left.MEDIUM);
+        toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
         Span pageHeader = new Span(i18NProvider.getTranslation("daily.temperature.page.header", getLocale(), location.getName()));
-        pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.BOLD);
+        pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
         toolbar.add(new Span(i18NProvider.getTranslation("daily.temperature.page.header.unit", getLocale())));
 

@@ -130,7 +130,7 @@ public class LocationView extends VerticalLayout {
 
         var toolbar = new HorizontalLayout(searchText, filterText);
         toolbar.addClassName("toolbar");
-        toolbar.addClassNames(LumoUtility.Padding.MEDIUM);
+        toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM,LumoUtility.Padding.Bottom.NONE);
         return toolbar;
     }
 
