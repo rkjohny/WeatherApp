@@ -4,8 +4,8 @@ package com.proit.weatherapp.services;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.security.Authority;
-import com.proit.weatherapp.services.core.GeocodingService;
-import com.proit.weatherapp.services.core.JsonService;
+import com.proit.weatherapp.core.OpenMetroService;
+import com.proit.weatherapp.core.JsonService;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
@@ -22,11 +22,11 @@ import java.util.List;
 public class LocationService {
     private static Logger logger = LoggerFactory.getLogger(LocationService.class);
 
-    private final GeocodingService geocodingService;
+    private final OpenMetroService openMetroService;
     private final JsonService jsonService;
 
-    public LocationService(GeocodingService geocodingService, JsonService jsonService) {
-        this.geocodingService = geocodingService;
+    public LocationService(OpenMetroService openMetroService, JsonService jsonService) {
+        this.openMetroService = openMetroService;
         this.jsonService = jsonService;
     }
 
@@ -35,7 +35,7 @@ public class LocationService {
         List<Location> locations = new ArrayList<>();
 
         if (!StringUtils.isBlank(city)) {
-            String response = geocodingService.getLocationsByCity(city);
+            String response = openMetroService.getLocationsByCity(city);
             JsonNode results = jsonService.getProperty(response, "results");
             if (results != null) {
                 locations.addAll(jsonService.fromJsonToList(results, Location.class));

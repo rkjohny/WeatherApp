@@ -29,8 +29,7 @@ public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
         setAction(RouteUtil.getRoutePath(VaadinService.getCurrent().getContext(), getClass()));
 
-        Locale locale = UI.getCurrent().getLocale();
-        String appName = i18NProvider.getTranslation("app.name", locale);
+        String appName = i18NProvider.getTranslation("app.name", getLocale());
 
         LoginI18n i18n = LoginI18n.createDefault();
         i18n.setHeader(new LoginI18n.Header());

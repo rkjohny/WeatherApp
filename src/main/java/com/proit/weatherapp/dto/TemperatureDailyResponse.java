@@ -37,6 +37,10 @@ public class TemperatureDailyResponse implements Serializable {
     private List<Double> wind = new ArrayList<>();
 
 
+    private Double checkNull(Double val) {
+        return val == null ? 0D : val;
+    }
+
     @NotNull
     public List<TemperatureDaily> getDailyList() {
         List<TemperatureDaily> list = new ArrayList<>();
@@ -45,10 +49,10 @@ public class TemperatureDailyResponse implements Serializable {
         minValue.ifPresent(length -> IntStream.range(0, length).forEach(i -> {
             TemperatureDaily temperatureDaily = new TemperatureDaily();
             temperatureDaily.setDate(date.get(i));
-            temperatureDaily.setTemperatureMax(tempMax.get(i));
-            temperatureDaily.setTemperatureMin(tempMin.get(i));
-            temperatureDaily.setRain(rain.get(i));
-            temperatureDaily.setWindMax(wind.get(i));
+            temperatureDaily.setMaxTemperature(checkNull(tempMax.get(i)));
+            temperatureDaily.setMinTemperature(checkNull(tempMin.get(i)));
+            temperatureDaily.setRain(checkNull(rain.get(i)));
+            temperatureDaily.setMaxWind(checkNull(wind.get(i)));
             list.add(temperatureDaily);
         }));
         return list;

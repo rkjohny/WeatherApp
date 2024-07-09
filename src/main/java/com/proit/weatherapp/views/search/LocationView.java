@@ -1,10 +1,13 @@
 package com.proit.weatherapp.views.search;
 
+import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.views.MainLayout;
+import com.proit.weatherapp.views.tenperature.daily.TemperatureDailyView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -19,6 +22,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.StreamResource;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import org.slf4j.Logger;
@@ -76,7 +80,7 @@ public class LocationView extends VerticalLayout {
         locationGrid.addComponentColumn(this::addCountryFlag).setHeader("Country").setSortable(true).setComparator(Comparator.comparing(Location::getCountry));
         locationGrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
-        locationGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToTemperatureView(valueChangeEvent.getValue()));
+        locationGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToDailyTemperatureView(valueChangeEvent.getValue()));
     }
 
     private Component addCountryFlag(Location location) {
@@ -151,8 +155,9 @@ public class LocationView extends VerticalLayout {
         return paginationControls;
     }
 
-    private void goToTemperatureView(Location location) {
-
+    private void goToDailyTemperatureView(Location location) {
+        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_LOCATION_KEY, location);
+        UI.getCurrent().navigate(TemperatureDailyView.class);
     }
 
     private void navigateToPage(int page) {

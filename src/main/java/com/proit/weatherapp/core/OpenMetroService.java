@@ -1,8 +1,8 @@
-package com.proit.weatherapp.services.core;
+package com.proit.weatherapp.core;
 
 
 import com.proit.weatherapp.error.GeocodingException;
-import com.proit.weatherapp.types.GeocodingParamValue;
+import com.proit.weatherapp.types.OpenMetroParamValue;
 import com.proit.weatherapp.types.LocationParam;
 import com.proit.weatherapp.types.TemperatureDailyParam;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @Component
-public class GeocodingService {
+public class OpenMetroService {
     private static final String LOCATION_URL = "https://geocoding-api.open-meteo.com/v1/search";
     private static final String TEMPERATURE_DAILY_URL = "https://api.open-meteo.com/v1/forecast";
 
@@ -28,7 +28,7 @@ public class GeocodingService {
 
     private final RestTemplate restTemplate;
 
-    public GeocodingService(RestTemplate restTemplate) {
+    public OpenMetroService(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 
@@ -67,12 +67,13 @@ public class GeocodingService {
     }
 
 
+    @NotNull
     public String getTemperatureDaily(Double latitude, Double longitude, String timeZone) {
-        String dailyPram = String.join(",", GeocodingParamValue.Daily.TEMP_2M_MAX, GeocodingParamValue.Daily.TEMP_2M_MIN, GeocodingParamValue.Daily.RAIN_SUM, GeocodingParamValue.Daily.WIND_10M_MAX);
+        String dailyPram = String.join(",", OpenMetroParamValue.Daily.TEMP_2M_MAX, OpenMetroParamValue.Daily.TEMP_2M_MIN, OpenMetroParamValue.Daily.RAIN_SUM, OpenMetroParamValue.Daily.WIND_10M_MAX);
 
-        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(LOCATION_URL)
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TEMPERATURE_DAILY_URL)
                 .queryParam(TemperatureDailyParam.LATITUDE, latitude)
-                .queryParam(TemperatureDailyParam.LATITUDE, longitude)
+                .queryParam(TemperatureDailyParam.LONGITUDE, longitude)
                 .queryParam(TemperatureDailyParam.TIME_ZONE, timeZone)
                 .queryParam(TemperatureDailyParam.FORECAST_DAY, MAX_DAILY_FORECAST_RESULT)
                 .queryParam(TemperatureDailyParam.DAILY, dailyPram)

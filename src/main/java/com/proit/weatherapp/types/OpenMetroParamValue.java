@@ -1,7 +1,7 @@
 package com.proit.weatherapp.types;
 
-public final class GeocodingParamValue {
-    private GeocodingParamValue() {
+public final class OpenMetroParamValue {
+    private OpenMetroParamValue() {
     }
 
     public static final class Location {

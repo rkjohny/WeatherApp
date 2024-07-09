@@ -1,4 +1,4 @@
-package com.proit.weatherapp.services.core;
+package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.repository.UserRepository;

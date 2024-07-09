@@ -5,8 +5,6 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.PageTitle;
 
-import java.util.AbstractMap;
-import java.util.Map;
 
 public final class Utils {
 
@@ -27,7 +25,4 @@ public final class Utils {
         return "";
     }
 
-    public static Map.Entry entry(Object key, Object value) {
-        return new AbstractMap.SimpleEntry(key, value);
-    }
 }

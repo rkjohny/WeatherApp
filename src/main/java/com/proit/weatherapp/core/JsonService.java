@@ -1,4 +1,4 @@
-package com.proit.weatherapp.services.core;
+package com.proit.weatherapp.core;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
