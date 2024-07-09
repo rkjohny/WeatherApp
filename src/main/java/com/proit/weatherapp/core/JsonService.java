@@ -39,8 +39,8 @@ public class JsonService {
     }
 
     @Nullable
-    public Object fromJson(String jsonString, Class clazz) {
-        Object o = null;
+    public <T> T fromJson(String jsonString, Class<T> clazz) {
+        T o = null;
         try {
             o = objectMapper.readValue(jsonString, clazz);
         } catch (Exception e) {
@@ -50,8 +50,8 @@ public class JsonService {
     }
 
     @Nullable
-    public Object fromJson(JsonNode jsonNode, Class clazz) {
-        Object o = null;
+    public <T> T fromJson(JsonNode jsonNode, Class<T> clazz) {
+        T o = null;
         try {
             o = fromJson(jsonNode.toString(), clazz);
         } catch (Exception e) {

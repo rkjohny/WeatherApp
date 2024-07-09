@@ -1,6 +1,7 @@
 package com.proit.weatherapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,9 +38,6 @@ public class TemperatureDailyResponse implements Serializable {
     private List<Double> wind = new ArrayList<>();
 
 
-    private Double checkNull(Double val) {
-        return val == null ? 0D : val;
-    }
 
     @NotNull
     public List<TemperatureDaily> getDailyList() {
@@ -48,11 +46,11 @@ public class TemperatureDailyResponse implements Serializable {
 
         minValue.ifPresent(length -> IntStream.range(0, length).forEach(i -> {
             TemperatureDaily temperatureDaily = new TemperatureDaily();
-            temperatureDaily.setDate(date.get(i));
-            temperatureDaily.setMaxTemperature(checkNull(tempMax.get(i)));
-            temperatureDaily.setMinTemperature(checkNull(tempMin.get(i)));
-            temperatureDaily.setRain(checkNull(rain.get(i)));
-            temperatureDaily.setMaxWind(checkNull(wind.get(i)));
+            temperatureDaily.setDate(Utils.checkNull(date.get(i)));
+            temperatureDaily.setMaxTemperature(Utils.checkNull(tempMax.get(i)));
+            temperatureDaily.setMinTemperature(Utils.checkNull(tempMin.get(i)));
+            temperatureDaily.setRain(Utils.checkNull(rain.get(i)));
+            temperatureDaily.setMaxWind(Utils.checkNull(wind.get(i)));
             list.add(temperatureDaily);
         }));
         return list;
