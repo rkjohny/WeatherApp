@@ -5,4 +5,5 @@ public final class Constant {
     }
 
     public static final String SELECTED_LOCATION_KEY = "SELECTED_LOCATION_KEY";
+    public static final String SELECTED_DAILY_TEMPERATURE_KEY = "SELECTED_DAILY_TEMPERATURE_KEY";
 }

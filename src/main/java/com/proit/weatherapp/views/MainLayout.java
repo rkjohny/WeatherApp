@@ -4,7 +4,7 @@ import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.security.AuthenticatedUser;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.favourite.Favourite;
-import com.proit.weatherapp.views.search.LocationView;
+import com.proit.weatherapp.views.location.LocationView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;

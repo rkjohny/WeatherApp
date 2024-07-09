@@ -5,7 +5,9 @@ import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.dto.TemperatureDaily;
 import com.proit.weatherapp.services.TemperatureService;
 import com.proit.weatherapp.views.MainLayout;
+import com.proit.weatherapp.views.tenperature.hourly.TemperatureHourlyView;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -86,7 +88,8 @@ public class TemperatureDailyView extends VerticalLayout {
     }
 
     private void goToHourlyTemperatureView(TemperatureDaily temperatureDaily) {
-
+        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_DAILY_TEMPERATURE_KEY, temperatureDaily);
+        UI.getCurrent().navigate(TemperatureHourlyView.class);
     }
 
     private void updateGrid() {

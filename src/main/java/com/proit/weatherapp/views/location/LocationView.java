@@ -1,4 +1,4 @@
-package com.proit.weatherapp.views.search;
+package com.proit.weatherapp.views.location;
 
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
