@@ -5,7 +5,7 @@ import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
-import com.proit.weatherapp.views.tenperature.daily.DailyWeatherView;
+import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
 import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;

@@ -2,11 +2,10 @@ package com.proit.weatherapp.views.favourite;
 
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataCurrent;
-import com.proit.weatherapp.dto.WeatherResponseCurrent;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.views.MainLayout;
-import com.proit.weatherapp.views.tenperature.daily.DailyWeatherView;
+import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;

@@ -1,11 +1,11 @@
-package com.proit.weatherapp.views.tenperature.daily;
+package com.proit.weatherapp.views.weather.daily;
 
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.dto.WeatherDataDaily;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.views.MainLayout;
-import com.proit.weatherapp.views.tenperature.hourly.HourlyWeatherView;
+import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;

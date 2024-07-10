@@ -1,4 +1,4 @@
-package com.proit.weatherapp.views.tenperature.hourly;
+package com.proit.weatherapp.views.weather.hourly;
 
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
