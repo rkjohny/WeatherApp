@@ -84,10 +84,8 @@ public class LocationService {
             user.getFavouriteLocations().add(FavouriteLocation.fromLocation(user, location));
             location.setFavorite(true);
         } else {
-            var list = user.getFavouriteLocations().stream().filter(fv -> !Objects.equals(fv.getLocationId(), location.getId())).toList();
-            user.getFavouriteLocations().clear();
-            user.getFavouriteLocations().addAll(list);
-            location.setFavorite(false);
+            boolean removed = user.getFavouriteLocations().removeIf(fv -> Objects.equals(fv.getLocationId(), location.getId()));
+            location.setFavorite(!removed);
         }
         userService.save(user);
     }

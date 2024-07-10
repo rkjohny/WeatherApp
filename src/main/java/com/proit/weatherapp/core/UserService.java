@@ -24,7 +24,7 @@ public class UserService {
     }
 
     public User update(User entity) {
-        return repository.save(entity);
+        return repository.saveAndFlush(entity);
     }
 
     public void delete(Long id) {
