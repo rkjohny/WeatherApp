@@ -60,7 +60,7 @@ public class DailyWeatherView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", getLocale(), cachedData.getCity()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", getLocale(), cachedData.getCity(), cachedData.getCountry()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
         toolbar.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit", getLocale())));
