@@ -43,4 +43,11 @@ public class UserService {
         return (int) repository.count();
     }
 
+    public Optional<User> getByUsername(String username) {
+        return repository.findByUsername(username);
+    }
+
+    public User save(User user) {
+        return repository.saveAndFlush(user);
+    }
 }

@@ -4,6 +4,7 @@ import com.proit.weatherapp.entity.Role;
 import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.repository.UserRepository;
 import com.proit.weatherapp.entity.UserRole;
+import com.proit.weatherapp.util.Utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -26,18 +27,14 @@ public class DataInitializer {
         this.userRepository = userRepository;
     }
 
-    public void generateUser() throws IOException {
+    public void generateUser() {
         logger.info("Generating initial data...");
 
         // Inserting David Bowie with role USER
         User user = new User();
         user.setUsername("david");
         user.setName("David Bowie");
-
-        ClassPathResource resource = new ClassPathResource("user_data/david.jpeg");
-        Path path = Paths.get(resource.getURI());
-        byte[] profilePicture = Files.readAllBytes(path);
-        user.setProfilePicture(profilePicture);
+        user.setProfilePicture(Utils.readProfilePicture("david.jpeg"));
 
         String passwordHash = BCrypt.hashpw("password", BCrypt.gensalt());
         user.setHashedPassword(passwordHash);
@@ -52,11 +49,7 @@ public class DataInitializer {
         user = new User();
         user.setUsername("john");
         user.setName("John Cena");
-
-        resource = new ClassPathResource("user_data/john.png");
-        path = Paths.get(resource.getURI());
-        profilePicture = Files.readAllBytes(path);
-        user.setProfilePicture(profilePicture);
+        user.setProfilePicture(Utils.readProfilePicture("john.png"));
 
         passwordHash = BCrypt.hashpw("password", BCrypt.gensalt());
         user.setHashedPassword(passwordHash);
@@ -75,11 +68,7 @@ public class DataInitializer {
         user = new User();
         user.setUsername("emma");
         user.setName("Emma Stone");
-
-        resource = new ClassPathResource("user_data/emma.jpeg");
-        path = Paths.get(resource.getURI());
-        profilePicture = Files.readAllBytes(path);
-        user.setProfilePicture(profilePicture);
+        user.setProfilePicture(Utils.readProfilePicture("emma.jpeg"));
 
         passwordHash = BCrypt.hashpw("password", BCrypt.gensalt());
         user.setHashedPassword(passwordHash);
@@ -94,11 +83,7 @@ public class DataInitializer {
         user = new User();
         user.setUsername("olivia");
         user.setName("Olivia Rodrigo");
-
-        resource = new ClassPathResource("user_data/olivia.jpeg");
-        path = Paths.get(resource.getURI());
-        profilePicture = Files.readAllBytes(path);
-        user.setProfilePicture(profilePicture);
+        user.setProfilePicture(Utils.readProfilePicture("olivia.jpg"));
 
         passwordHash = BCrypt.hashpw("password", BCrypt.gensalt());
         user.setHashedPassword(passwordHash);

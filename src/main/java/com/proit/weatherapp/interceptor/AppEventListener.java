@@ -20,7 +20,7 @@ public class AppEventListener implements ApplicationListener<ContextRefreshedEve
     public void onApplicationEvent(ContextRefreshedEvent event) {
         try {
             dataInitializer.generateUser();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

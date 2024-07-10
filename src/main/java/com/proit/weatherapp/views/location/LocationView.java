@@ -3,6 +3,7 @@ package com.proit.weatherapp.views.location;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.services.LocationService;
+import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.tenperature.daily.DailyWeatherView;
 import com.vaadin.flow.component.Component;
@@ -27,14 +28,9 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.vaadin.lineawesome.LineAwesomeIcon;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 
@@ -78,25 +74,15 @@ public class LocationView extends VerticalLayout {
 
         locationGrid.setColumns("name", "latitude", "longitude", "elevation", "admin1");
         locationGrid.addComponentColumn(this::addCountryFlag).setHeader("Country").setSortable(true).setComparator(Comparator.comparing(Location::getCountry));
+        locationGrid.addComponentColumn(this::addFavoriteButton).setHeader("");
         locationGrid.getColumns().forEach(col -> col.setAutoWidth(true));
-
         locationGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToDailyTemperatureView(valueChangeEvent.getValue()));
     }
 
     private Component addCountryFlag(Location location) {
         Avatar avatar = new Avatar(location.getCountryCode());
-        StreamResource streamResource = null;
-        try {
-            String flagFileName = location.getCountryCode().toLowerCase(getLocale()) + ".svg";
-            String flagFile = "country_flag/" + flagFileName;
-            ClassPathResource resource = new ClassPathResource(flagFile);
-            Path path = Paths.get(resource.getURI());
-            byte[] flagData = Files.readAllBytes(path);
-            streamResource = new StreamResource(flagFileName, () -> new ByteArrayInputStream(flagData));
-        } catch (IOException e) {
-            logger.warn("Failed to retrieve flag for country. [{}]", e.getMessage());
-        }
-
+        String flagFileName = location.getCountryCode().toLowerCase(getLocale()) + ".svg";
+        StreamResource streamResource = new StreamResource(flagFileName, () -> new ByteArrayInputStream(Utils.readCountryFlag(flagFileName)));
         avatar.setImageResource(streamResource);
         avatar.setThemeName("xsmall");
         avatar.getElement().setAttribute("tabindex", "-1");
@@ -108,6 +94,10 @@ public class LocationView extends VerticalLayout {
         div.getElement().getStyle().set("align-items", "center");
         div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
         return div;
+    }
+
+    private Component addFavoriteButton(Location location) {
+        return new Button("Favorite", buttonClickEvent -> locationService.toggleFavourite(location));
     }
 
     private Component getToolbar() {

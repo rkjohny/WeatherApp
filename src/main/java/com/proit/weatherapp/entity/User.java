@@ -15,6 +15,7 @@ import java.util.List;
 @Table(name = "t_user")
 public class User extends AbstractEntity {
 
+    @Column(unique = true)
     private String username;
 
     private String name;

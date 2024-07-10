@@ -2,7 +2,10 @@ package com.proit.weatherapp.services;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.proit.weatherapp.core.UserService;
 import com.proit.weatherapp.dto.Location;
+import com.proit.weatherapp.entity.FavouriteLocation;
+import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.security.Authority;
 import com.proit.weatherapp.core.OpenMetroService;
 import com.proit.weatherapp.core.JsonService;
@@ -11,10 +14,13 @@ import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 @Service
@@ -24,10 +30,12 @@ public class LocationService {
 
     private final OpenMetroService openMetroService;
     private final JsonService jsonService;
+    private final UserService userService;
 
-    public LocationService(OpenMetroService openMetroService, JsonService jsonService) {
+    public LocationService(OpenMetroService openMetroService, JsonService jsonService, UserService userService) {
         this.openMetroService = openMetroService;
         this.jsonService = jsonService;
+        this.userService = userService;
     }
 
     @NotNull
@@ -47,5 +55,40 @@ public class LocationService {
             }
         }
         return locations;
+    }
+
+    public void checkFavorite(Location location) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!StringUtils.isBlank(username)) {
+            Optional<User> user = userService.getByUsername(username);
+            user.ifPresent(u -> checkFavorite(u, location));
+        }
+    }
+
+    public void checkFavorite(User user, Location location) {
+        boolean favorite = user.getFavouriteLocations().stream().anyMatch(fu -> Objects.equals(fu.getLocationId(), location.getId()));
+        location.setFavorite(favorite);
+    }
+
+    public void toggleFavourite(Location location) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!StringUtils.isBlank(username)) {
+            Optional<User> user = userService.getByUsername(username);
+            user.ifPresent(u -> toggleFavourite(u, location));
+        }
+    }
+
+    public void toggleFavourite(User user, Location location) {
+        checkFavorite(user, location);
+        if (!location.isFavorite()) {
+            user.getFavouriteLocations().add(FavouriteLocation.fromLocation(user, location));
+            location.setFavorite(true);
+        } else {
+            var list = user.getFavouriteLocations().stream().filter(fv -> !Objects.equals(fv.getLocationId(), location.getId())).toList();
+            user.getFavouriteLocations().clear();
+            user.getFavouriteLocations().addAll(list);
+            location.setFavorite(false);
+        }
+        userService.save(user);
     }
 }

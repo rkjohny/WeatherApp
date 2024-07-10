@@ -1,10 +1,10 @@
 package com.proit.weatherapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,10 +28,12 @@ public class Location implements Serializable {
     private String admin3;
     private String admin4;
     private String timezone;
+    private boolean favorite = false;
 
     @NotNull
     public String getCountry() {
         // This method is used in comparator, returning empty string instead of null to avoid NullPointerException
-        return StringUtils.isAllBlank(country) ? StringUtils.EMPTY : country;
+        return Utils.checkNull(country);
     }
+
 }

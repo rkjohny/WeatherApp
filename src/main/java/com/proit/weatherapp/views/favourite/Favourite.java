@@ -7,11 +7,13 @@ import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.security.AuthenticationContext;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 import jakarta.annotation.security.PermitAll;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-@PageTitle("About")
-@Route(value = "about", layout = MainLayout.class)
+@PageTitle("Favourite")
+@Route(value = "favourite", layout = MainLayout.class)
 @PermitAll
 public class Favourite extends VerticalLayout {
 
