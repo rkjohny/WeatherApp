@@ -13,9 +13,12 @@ public class WeatherDataCurrent implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    private Double latitude;
+    private Double longitude;
     private String city;
-
+    private String timezone;
     private String country;
+    private String date;
 
     private Double temperature;
 

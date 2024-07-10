@@ -1,9 +1,9 @@
 package com.proit.weatherapp.views.weather.daily;
 
 import com.proit.weatherapp.config.Constant;
-import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.dto.WeatherDataDaily;
 import com.proit.weatherapp.services.WeatherService;
+import com.proit.weatherapp.types.CachedData;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
 import com.vaadin.flow.component.Component;
@@ -28,13 +28,13 @@ public class DailyWeatherView extends VerticalLayout {
     private final I18NProvider i18NProvider;
     private final WeatherService weatherService;
 
-    private Location location;
+    private CachedData cachedData;
     private final Grid<WeatherDataDaily> temperatureGrid = new Grid<>(WeatherDataDaily.class);
 
     public DailyWeatherView(I18NProvider i18NProvider, WeatherService weatherService) {
         this.i18NProvider = i18NProvider;
         this.weatherService = weatherService;
-        location = (Location) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_LOCATION_KEY);
+        cachedData = (CachedData) VaadinSession.getCurrent().getAttribute(Constant.APP_CACHE_DATA);
 
         addClassName("list-view");
         setSizeFull();
@@ -60,7 +60,7 @@ public class DailyWeatherView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", getLocale(), location.getName()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", getLocale(), cachedData.getCity()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
         toolbar.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit", getLocale())));
@@ -88,7 +88,8 @@ public class DailyWeatherView extends VerticalLayout {
     }
 
     private void goToHourlyTemperatureView(WeatherDataDaily weatherDataDaily) {
-        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_DAILY_WEATHER_KEY, weatherDataDaily);
+        cachedData.setDate(weatherDataDaily.getDate());
+        VaadinSession.getCurrent().setAttribute(Constant.APP_CACHE_DATA, cachedData);
         UI.getCurrent().navigate(HourlyWeatherView.class);
     }
 
@@ -98,6 +99,6 @@ public class DailyWeatherView extends VerticalLayout {
     }
 
     private List<WeatherDataDaily> getDailyTemperatureForecast() {
-        return weatherService.getDailyWeather(location.getLatitude(), location.getLongitude(), location.getTimezone());
+        return weatherService.getDailyWeather(cachedData.getLatitude(), cachedData.getLongitude(), cachedData.getTimezone());
     }
 }

@@ -1,12 +1,17 @@
 package com.proit.weatherapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.proit.weatherapp.config.Constant;
+import com.proit.weatherapp.types.OpenMetroAPIParam;
 import com.proit.weatherapp.types.OpenMetroAPIParamValue;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Getter
@@ -14,6 +19,9 @@ import java.io.Serializable;
 public class WeatherResponseCurrent implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    @JsonProperty(value = "time")
+    private String dateTime;
 
     @JsonProperty(value = OpenMetroAPIParamValue.TEMPERATURE_2M)
     private Double temperature;
@@ -56,8 +64,16 @@ public class WeatherResponseCurrent implements Serializable {
 
     public WeatherDataCurrent toCurrentData(Location location) {
         WeatherDataCurrent current = new WeatherDataCurrent();
+
+        //TODO: get this data from response
+        current.setLatitude(location.getLatitude());
+        current.setLongitude(location.getLongitude());
+        current.setTimezone(location.getTimezone());
         current.setCity(location.getName());
         current.setCountry(location.getCountry());
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime, Constant.APP_DATE_TIME_FORMATTER);
+        current.setDate(localDateTime.format(Constant.APP_DATE_FORMATTER));
+
         current.setTemperature(temperature);
         current.setWind(wind);
         current.setWindDirection(windDirection);

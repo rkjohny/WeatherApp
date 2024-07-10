@@ -4,8 +4,10 @@ import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataCurrent;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.services.WeatherService;
+import com.proit.weatherapp.types.CachedData;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
+import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.grid.Grid;
@@ -89,9 +91,16 @@ public class FavouriteView extends VerticalLayout {
         return content;
     }
 
-    private void goToDailyTemperatureView(WeatherDataCurrent weatherDataCurrent) {
-        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_CURRENT_WEATHER_KEY, weatherDataCurrent);
-        UI.getCurrent().navigate(DailyWeatherView.class);
+    private void goToDailyTemperatureView(WeatherDataCurrent dataCurrent) {
+        CachedData cachedData = new CachedData();
+        cachedData.setLatitude(dataCurrent.getLatitude());
+        cachedData.setLongitude(dataCurrent.getLongitude());
+        cachedData.setTimezone(dataCurrent.getTimezone());
+        cachedData.setCity(dataCurrent.getCity());
+        cachedData.setCountry(dataCurrent.getCountry());
+
+        VaadinSession.getCurrent().setAttribute(Constant.APP_CACHE_DATA, cachedData);
+        UI.getCurrent().navigate(HourlyWeatherView.class);
     }
 
     private void updateGrid() {

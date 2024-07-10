@@ -3,6 +3,7 @@ package com.proit.weatherapp.views.location;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.services.LocationService;
+import com.proit.weatherapp.types.CachedData;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
@@ -155,7 +156,12 @@ public class LocationView extends VerticalLayout {
     }
 
     private void goToDailyTemperatureView(Location location) {
-        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_LOCATION_KEY, location);
+        CachedData cachedData = new CachedData();
+        cachedData.setLatitude(location.getLatitude());
+        cachedData.setLongitude(location.getLongitude());
+        cachedData.setTimezone(location.getTimezone());
+        cachedData.setCountry(location.getCountry());
+        VaadinSession.getCurrent().setAttribute(Constant.APP_CACHE_DATA, cachedData);
         UI.getCurrent().navigate(DailyWeatherView.class);
     }
 

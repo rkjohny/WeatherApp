@@ -1,10 +1,9 @@
 package com.proit.weatherapp.views.weather.hourly;
 
 import com.proit.weatherapp.config.Constant;
-import com.proit.weatherapp.dto.Location;
-import com.proit.weatherapp.dto.WeatherDataDaily;
 import com.proit.weatherapp.dto.WeatherDataHourly;
 import com.proit.weatherapp.services.WeatherService;
+import com.proit.weatherapp.types.CachedData;
 import com.proit.weatherapp.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
@@ -28,8 +27,7 @@ public class HourlyWeatherView extends VerticalLayout {
     private final I18NProvider i18NProvider;
     private final WeatherService weatherService;
 
-    private final Location location;
-    private final WeatherDataDaily weatherDataDaily;
+    private final CachedData cachedData;
 
     private final Chart hourlyChart;
     private final Configuration hourlyChartConf;
@@ -38,8 +36,7 @@ public class HourlyWeatherView extends VerticalLayout {
     public HourlyWeatherView(I18NProvider i18NProvider, WeatherService weatherService) {
         this.i18NProvider = i18NProvider;
         this.weatherService = weatherService;
-        location = (Location) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_LOCATION_KEY);
-        weatherDataDaily = (WeatherDataDaily) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_DAILY_WEATHER_KEY);
+        cachedData = (CachedData) VaadinSession.getCurrent().getAttribute(Constant.APP_CACHE_DATA);
 
         hourlyChart = new Chart(ChartType.LINE);
         hourlyChartConf = hourlyChart.getConfiguration();
@@ -80,10 +77,10 @@ public class HourlyWeatherView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("hourly.weather.page.header", getLocale(), location.getName()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("hourly.weather.page.header", getLocale(), cachedData.getCity()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
-        toolbar.add(new Span(i18NProvider.getTranslation("hourly.weather.page.header.date", getLocale(), weatherDataDaily.getDate())));
+        toolbar.add(new Span(i18NProvider.getTranslation("hourly.weather.page.header.date", getLocale(), cachedData.getDate())));
         return toolbar;
     }
 
@@ -127,6 +124,6 @@ public class HourlyWeatherView extends VerticalLayout {
     }
 
     private List<WeatherDataHourly> getAPIResults() {
-        return weatherService.getHourlyWeather(location.getLatitude(), location.getLongitude(), location.getTimezone(), weatherDataDaily.getDate());
+        return weatherService.getHourlyWeather(cachedData.getLatitude(), cachedData.getLongitude(), cachedData.getTimezone(), cachedData.getDate());
     }
 }
