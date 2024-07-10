@@ -6,6 +6,7 @@ import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.tenperature.daily.DailyWeatherView;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
@@ -97,7 +98,15 @@ public class LocationView extends VerticalLayout {
     }
 
     private Component addFavoriteButton(Location location) {
-        return new Button("Favorite", buttonClickEvent -> locationService.toggleFavourite(location));
+        locationService.checkFavorite(location);
+        var icon = location.isFavorite() ? LineAwesomeIcon.STAR_SOLID.create() : LineAwesomeIcon.STAR.create();
+        return new Button(icon, buttonClickEvent -> toggleFavorite(buttonClickEvent, location));
+    }
+
+    private void toggleFavorite(ClickEvent<Button> buttonClickEvent,  Location location) {
+        locationService.toggleFavorite(location);
+        var icon = location.isFavorite() ? LineAwesomeIcon.STAR_SOLID.create() : LineAwesomeIcon.STAR.create();
+        buttonClickEvent.getSource().setIcon(icon);
     }
 
     private Component getToolbar() {

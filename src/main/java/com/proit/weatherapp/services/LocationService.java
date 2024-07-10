@@ -70,15 +70,15 @@ public class LocationService {
         location.setFavorite(favorite);
     }
 
-    public void toggleFavourite(Location location) {
+    public void toggleFavorite(Location location) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!StringUtils.isBlank(username)) {
             Optional<User> user = userService.getByUsername(username);
-            user.ifPresent(u -> toggleFavourite(u, location));
+            user.ifPresent(u -> toggleFavorite(u, location));
         }
     }
 
-    public void toggleFavourite(User user, Location location) {
+    public void toggleFavorite(User user, Location location) {
         checkFavorite(user, location);
         if (!location.isFavorite()) {
             user.getFavouriteLocations().add(FavouriteLocation.fromLocation(user, location));
