@@ -3,7 +3,7 @@ package com.proit.weatherapp.views;
 import com.proit.weatherapp.entity.User;
 import com.proit.weatherapp.security.AuthenticatedUser;
 import com.proit.weatherapp.util.Utils;
-import com.proit.weatherapp.views.favourite.Favourite;
+import com.proit.weatherapp.views.favourite.FavouriteView;
 import com.proit.weatherapp.views.location.LocationView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
@@ -81,8 +81,8 @@ public class MainLayout extends AppLayout {
         if (accessChecker.hasAccess(LocationView.class)) {
             nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.search", locale), LocationView.class, LineAwesomeIcon.LOCATION_ARROW_SOLID.create()));
         }
-        if (accessChecker.hasAccess(Favourite.class)) {
-            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.favourite", locale), Favourite.class, LineAwesomeIcon.STAR_SOLID.create()));
+        if (accessChecker.hasAccess(FavouriteView.class)) {
+            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.favourite", locale), FavouriteView.class, LineAwesomeIcon.STAR_SOLID.create()));
         }
 
         return nav;

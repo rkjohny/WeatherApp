@@ -118,4 +118,30 @@ public class OpenMetroService {
         String jsonResponse = response.getBody();
         return Utils.checkNull(jsonResponse);
     }
+
+    @NotNull
+    public String getWeatherCurrent(Double latitude, Double longitude, String timeZone) {
+        String currentPram = String.join(",", OpenMetroAPIParamValue.TEMPERATURE_2M, OpenMetroAPIParamValue.WIND_10M,
+                OpenMetroAPIParamValue.WIND_DIRECTION_10M, OpenMetroAPIParamValue.RAIN, OpenMetroAPIParamValue.PRECIPITATION,
+                OpenMetroAPIParamValue.PRECIPITATION_PROB, OpenMetroAPIParamValue.SHOWERS, OpenMetroAPIParamValue.SNOWFALL,
+                OpenMetroAPIParamValue.CLOUD_COVER, OpenMetroAPIParamValue.CLOUD_COVER_HIGH, OpenMetroAPIParamValue.CLOUD_COVER_MID,
+                OpenMetroAPIParamValue.CLOUD_COVER_LOW, OpenMetroAPIParamValue.WEATHER_CODE);
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TEMPERATURE_URL)
+                .queryParam(OpenMetroAPIParam.LATITUDE, latitude)
+                .queryParam(OpenMetroAPIParam.LONGITUDE, longitude)
+                .queryParam(OpenMetroAPIParam.TIME_ZONE, timeZone)
+                .queryParam(OpenMetroAPIParam.CURRENT, currentPram)
+                .queryParam(OpenMetroAPIParam.FORMAT, OpenMetroAPIParamValue.FORMAT_JSON);
+        URI uri = uriBuilder.build().toUri();
+
+        // Create the HttpEntity object with headers
+        HttpEntity<String> entity = new HttpEntity<>(generateHeaders());
+
+        // Make the GET request
+        ResponseEntity<String> response = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+        checkResponse(response, uri, HttpStatus.OK);
+        String jsonResponse = response.getBody();
+        return Utils.checkNull(jsonResponse);
+    }
 }

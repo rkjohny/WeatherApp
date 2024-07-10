@@ -1,11 +1,7 @@
 package com.proit.weatherapp.services;
 
-
 import com.fasterxml.jackson.databind.JsonNode;
-import com.proit.weatherapp.dto.WeatherDataDaily;
-import com.proit.weatherapp.dto.WeatherResponseDaily;
-import com.proit.weatherapp.dto.WeatherDataHourly;
-import com.proit.weatherapp.dto.WeatherResponseHourly;
+import com.proit.weatherapp.dto.*;
 import com.proit.weatherapp.security.Authority;
 import com.proit.weatherapp.core.OpenMetroService;
 import com.proit.weatherapp.core.JsonService;
@@ -69,5 +65,28 @@ public class WeatherService {
         return hourlyTemperatureList;
     }
 
+    @NotNull
+    public WeatherResponseCurrent getCurrentWeather(Double latitude, Double longitude, String timeZone) {
+        WeatherResponseCurrent responseCurrent = new WeatherResponseCurrent();
 
+        if (latitude != null && longitude != null & !StringUtils.isBlank(timeZone)) {
+            String response = openMetroService.getWeatherCurrent(latitude, longitude, timeZone);
+            JsonNode current = jsonService.getProperty(response, OpenMetroAPIParam.CURRENT);
+            if (current != null) {
+                return jsonService.fromJson(current, WeatherResponseCurrent.class);
+
+            }
+        }
+        return responseCurrent;
+    }
+
+    @NotNull
+    public List<WeatherDataCurrent> getCurrentWeather(List<Location> locations) {
+        List<WeatherDataCurrent> weatherDataCurrents = new ArrayList<>();
+        locations.forEach(location -> {
+            WeatherResponseCurrent response = getCurrentWeather(location.getLatitude(), location.getLongitude(), location.getTimezone());
+            weatherDataCurrents.add(response.toCurrentData(location));
+        });
+        return weatherDataCurrents;
+    }
 }

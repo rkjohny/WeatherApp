@@ -88,7 +88,7 @@ public class DailyWeatherView extends VerticalLayout {
     }
 
     private void goToHourlyTemperatureView(WeatherDataDaily weatherDataDaily) {
-        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_DAILY_TEMPERATURE_KEY, weatherDataDaily);
+        VaadinSession.getCurrent().setAttribute(Constant.SELECTED_DAILY_WEATHER_KEY, weatherDataDaily);
         UI.getCurrent().navigate(HourlyWeatherView.class);
     }
 

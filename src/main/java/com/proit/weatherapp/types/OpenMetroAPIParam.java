@@ -25,4 +25,6 @@ public final class OpenMetroAPIParam {
     public static final String HOURLY = "hourly";
     public static final String FORECAST_HOURS = "forecast_hours";
 
+    // Current weather forecast API params
+    public static final String CURRENT = "current";
 }

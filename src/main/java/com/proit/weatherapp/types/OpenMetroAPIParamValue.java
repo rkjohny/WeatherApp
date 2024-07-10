@@ -20,12 +20,18 @@ public final class OpenMetroAPIParamValue {
     public static final String SHOWERS_SUM = "showers_sum";
     public static final String SNOWFALL_SUM = "snowfall_sum";
 
-    // Values for 'hourly' param
+    // Values for 'hourly' and 'current' param
     public static final String TEMPERATURE_2M = "temperature_2m";
     public static final String WIND_10M = "wind_speed_10m";
+    public static final String WIND_DIRECTION_10M = "wind_direction_10m";
     public static final String RAIN = "rain";
     public static final String PRECIPITATION = "precipitation";
     public static final String PRECIPITATION_PROB = "precipitation_probability";
     public static final String SHOWERS = "showers";
     public static final String SNOWFALL = "snowfall";
+    public static final String CLOUD_COVER = "cloud_cover";
+    public static final String CLOUD_COVER_LOW = "cloud_cover_low";
+    public static final String CLOUD_COVER_MID = "cloud_cover_mid";
+    public static final String CLOUD_COVER_HIGH = "cloud_cover_high";
+    public static final String WEATHER_CODE = "weather_code";
 }

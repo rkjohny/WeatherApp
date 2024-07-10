@@ -89,4 +89,17 @@ public class LocationService {
         }
         userService.save(user);
     }
+
+    public List<Location> getFavoriteLocations() {
+        List<Location> locations = new ArrayList<>();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!StringUtils.isBlank(username)) {
+            Optional<User> user = userService.getByUsername(username);
+            user.ifPresent(u -> {
+                var favoriteLocations = u.getFavouriteLocations();
+                favoriteLocations.forEach(fv -> locations.add(fv.toLocation()));
+            });
+        }
+        return locations;
+    }
 }

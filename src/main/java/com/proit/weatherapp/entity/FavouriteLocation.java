@@ -47,4 +47,21 @@ public class FavouriteLocation extends AbstractEntity {
         favouriteLocation.timezone = location.getTimezone();
         return favouriteLocation;
     }
+
+    public Location toLocation() {
+        Location location = new Location();
+        location.setId(locationId);
+        location.setName(name);
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        location.setElevation(elevation);
+        location.setCountryCode(countryCode);
+        location.setCountry(country);
+        location.setAdmin1(admin1);
+        location.setAdmin2(admin2);
+        location.setAdmin3(admin3);
+        location.setAdmin4(admin4);
+        location.setTimezone(timezone);
+        return location;
+    }
 }

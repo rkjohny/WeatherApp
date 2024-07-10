@@ -39,7 +39,7 @@ public class HourlyWeatherView extends VerticalLayout {
         this.i18NProvider = i18NProvider;
         this.weatherService = weatherService;
         location = (Location) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_LOCATION_KEY);
-        weatherDataDaily = (WeatherDataDaily) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_DAILY_TEMPERATURE_KEY);
+        weatherDataDaily = (WeatherDataDaily) VaadinSession.getCurrent().getAttribute(Constant.SELECTED_DAILY_WEATHER_KEY);
 
         hourlyChart = new Chart(ChartType.LINE);
         hourlyChartConf = hourlyChart.getConfiguration();
