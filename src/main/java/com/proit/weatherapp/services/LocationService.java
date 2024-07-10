@@ -38,6 +38,13 @@ public class LocationService {
         this.userService = userService;
     }
 
+
+    /**
+     * Get all the location by a city filtered by a filter text.
+     *
+     * @param city name of the location
+     * @return the {@link List<Location>} the list of the location by the name(city)
+     */
     @NotNull
     public List<Location> getLocations(String city, String filterText) {
         List<Location> locations = new ArrayList<>();
@@ -57,6 +64,11 @@ public class LocationService {
         return locations;
     }
 
+    /**
+     * Check if a location has been marked as favorite by the current logged-in user
+     *
+     * @param location the {@link Location} object to check
+     */
     public void checkFavorite(Location location) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!StringUtils.isBlank(username)) {
@@ -65,11 +77,22 @@ public class LocationService {
         }
     }
 
+    /**
+     * Check if a location has been marked as favorite by the specified user
+     *
+     * @param user the {@link User} object to check
+     * @param location the {@link Location} object to check
+     */
     public void checkFavorite(User user, Location location) {
         boolean favorite = user.getFavouriteLocations().stream().anyMatch(fu -> Objects.equals(fu.getLocationId(), location.getId()));
         location.setFavorite(favorite);
     }
 
+    /**
+     * Toggle the favorite mark of a location by the current logged-in user
+     *
+     * @param location the {@link Location} object to toggle
+     */
     public void toggleFavorite(Location location) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!StringUtils.isBlank(username)) {
@@ -78,6 +101,12 @@ public class LocationService {
         }
     }
 
+    /**
+     * Toggle the favorite mark of a location by a specified user
+     *
+     * @param user the {@link User} who will toggle the favorite mark
+     * @param location the {@link Location} object to toggle
+     */
     public void toggleFavorite(User user, Location location) {
         checkFavorite(user, location);
         if (!location.isFavorite()) {
@@ -90,6 +119,11 @@ public class LocationService {
         userService.save(user);
     }
 
+    /**
+     * Get all the locations marked as favorite by the current logged-in user
+     *
+     * @return the {@link List<Location>} the list of the locations marked as favorite
+     */
     public List<Location> getFavoriteLocations() {
         List<Location> locations = new ArrayList<>();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();

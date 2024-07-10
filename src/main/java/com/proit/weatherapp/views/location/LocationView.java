@@ -160,6 +160,7 @@ public class LocationView extends VerticalLayout {
         cachedData.setLatitude(location.getLatitude());
         cachedData.setLongitude(location.getLongitude());
         cachedData.setTimezone(location.getTimezone());
+        cachedData.setCity(location.getName());
         cachedData.setCountry(location.getCountry());
         VaadinSession.getCurrent().setAttribute(Constant.APP_CACHE_DATA, cachedData);
         UI.getCurrent().navigate(DailyWeatherView.class);

@@ -5,6 +5,7 @@ import com.proit.weatherapp.dto.WeatherDataCurrent;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
 import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
@@ -98,7 +99,7 @@ public class FavouriteView extends VerticalLayout {
         cachedData.setTimezone(dataCurrent.getTimezone());
         cachedData.setCity(dataCurrent.getCity());
         cachedData.setCountry(dataCurrent.getCountry());
-
+        cachedData.setDate(Utils.getCurrentDate(dataCurrent.getTimezone()));
         VaadinSession.getCurrent().setAttribute(Constant.APP_CACHE_DATA, cachedData);
         UI.getCurrent().navigate(HourlyWeatherView.class);
     }

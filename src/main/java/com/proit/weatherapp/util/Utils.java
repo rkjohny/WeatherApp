@@ -1,5 +1,6 @@
 package com.proit.weatherapp.util;
 
+import com.proit.weatherapp.config.Constant;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.HasDynamicTitle;
 import com.vaadin.flow.router.PageTitle;
@@ -12,6 +13,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 
 public final class Utils {
@@ -66,5 +70,15 @@ public final class Utils {
             logger.warn("Failed to retrieve profile picture file. [{}]", e.getMessage());
         }
         return new byte[0];
+    }
+
+    public static String getCurrentDate(String timezone) {
+        ZoneId zoneId = ZoneId.of(timezone);
+        // Get the current date and time in the specified timezone
+        ZonedDateTime zonedDateTime = ZonedDateTime.now(zoneId);
+        // Extract the date part
+        LocalDate currentDate = zonedDateTime.toLocalDate();
+        // Format the date part as a string in the format "yyyy-MM-dd"
+        return currentDate.format(Constant.APP_DATE_FORMATTER);
     }
 }

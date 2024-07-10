@@ -31,12 +31,20 @@ public class WeatherService {
         this.jsonService = jsonService;
     }
 
+    /**
+     * Get daily weather forecast (of 16 days) of a location specified by latitude, longitude and the timezone
+     *
+     * @param latitude latitude of the location
+     * @param longitude longitude of the location
+     * @param timezone timezone of the location
+     * @return the {@link List<WeatherDataDaily>} the list of the daily forecast data
+     */
     @NotNull
-    public List<WeatherDataDaily> getDailyWeather(Double latitude, Double longitude, String timeZone) {
+    public List<WeatherDataDaily> getDailyWeather(Double latitude, Double longitude, String timezone) {
         List<WeatherDataDaily> dailyTemperatureList = new ArrayList<>();
 
-        if (latitude != null && longitude != null & !StringUtils.isBlank(timeZone)) {
-            String response = openMetroService.getWeatherDaily(latitude, longitude, timeZone);
+        if (latitude != null && longitude != null & !StringUtils.isBlank(timezone)) {
+            String response = openMetroService.getWeatherDaily(latitude, longitude, timezone);
             JsonNode daily = jsonService.getProperty(response, OpenMetroAPIParam.DAILY);
             if (daily != null) {
                 WeatherResponseDaily dailyResponse = (WeatherResponseDaily) jsonService.fromJson(daily, WeatherResponseDaily.class);
@@ -48,12 +56,21 @@ public class WeatherService {
         return dailyTemperatureList;
     }
 
+    /**
+     * Get hourly weather forecast (of 24 hours) of a specific day of a location specified by latitude, longitude and the timezone
+     *
+     * @param latitude latitude of the location
+     * @param longitude longitude of the location
+     * @param timezone timezone of the location
+     * @param date the specified day in the format 'yyyy-mm-dd'
+     * @return the {@link List<WeatherDataHourly>} the list of the hourly forecast data (for 24 hours)
+     */
     @NotNull
-    public List<WeatherDataHourly> getHourlyWeather(Double latitude, Double longitude, String timeZone, String date) {
+    public List<WeatherDataHourly> getHourlyWeather(Double latitude, Double longitude, String timezone, String date) {
         List<WeatherDataHourly> hourlyTemperatureList = new ArrayList<>();
 
-        if (latitude != null && longitude != null & !StringUtils.isBlank(timeZone)) {
-            String response = openMetroService.getWeatherHourly(latitude, longitude, timeZone, date);
+        if (latitude != null && longitude != null & !StringUtils.isBlank(timezone)) {
+            String response = openMetroService.getWeatherHourly(latitude, longitude, timezone, date);
             JsonNode hourly = jsonService.getProperty(response, OpenMetroAPIParam.HOURLY);
             if (hourly != null) {
                 WeatherResponseHourly hourlyResponse = (WeatherResponseHourly) jsonService.fromJson(hourly, WeatherResponseHourly.class);
@@ -65,12 +82,20 @@ public class WeatherService {
         return hourlyTemperatureList;
     }
 
+    /**
+     * Get the current weather information of a location specified by latitude, longitude and the timezone
+     *
+     * @param latitude latitude of the location
+     * @param longitude longitude of the location
+     * @param timezone timezone of the location
+     * @return the {@link WeatherResponseCurrent} the current weather data
+     */
     @NotNull
-    public WeatherResponseCurrent getCurrentWeather(Double latitude, Double longitude, String timeZone) {
+    public WeatherResponseCurrent getCurrentWeather(Double latitude, Double longitude, String timezone) {
         WeatherResponseCurrent responseCurrent = new WeatherResponseCurrent();
 
-        if (latitude != null && longitude != null & !StringUtils.isBlank(timeZone)) {
-            String response = openMetroService.getWeatherCurrent(latitude, longitude, timeZone);
+        if (latitude != null && longitude != null & !StringUtils.isBlank(timezone)) {
+            String response = openMetroService.getWeatherCurrent(latitude, longitude, timezone);
             JsonNode current = jsonService.getProperty(response, OpenMetroAPIParam.CURRENT);
             if (current != null) {
                 return jsonService.fromJson(current, WeatherResponseCurrent.class);
@@ -80,6 +105,12 @@ public class WeatherService {
         return responseCurrent;
     }
 
+    /**
+     * Get the current weather information of a list of locations specified by latitude, longitude and the timezone
+     *
+     * @param locations list of locations
+     * @return the {@link List<WeatherDataCurrent>} the list of current weather data for the specified location list
+     */
     @NotNull
     public List<WeatherDataCurrent> getCurrentWeather(List<Location> locations) {
         List<WeatherDataCurrent> weatherDataCurrents = new ArrayList<>();

@@ -6,6 +6,7 @@ import com.proit.weatherapp.types.OpenMetroAPIParamValue;
 import com.proit.weatherapp.types.OpenMetroAPIParam;
 import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -99,6 +100,9 @@ public class OpenMetroService {
                 OpenMetroAPIParamValue.RAIN, OpenMetroAPIParamValue.PRECIPITATION, OpenMetroAPIParamValue.PRECIPITATION_PROB,
                 OpenMetroAPIParamValue.SHOWERS, OpenMetroAPIParamValue.SNOWFALL);
 
+        if (StringUtils.isBlank(date)) {
+            date = Utils.getCurrentDate(timeZone);
+        }
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(TEMPERATURE_URL)
                 .queryParam(OpenMetroAPIParam.LATITUDE, latitude)
                 .queryParam(OpenMetroAPIParam.LONGITUDE, longitude)
