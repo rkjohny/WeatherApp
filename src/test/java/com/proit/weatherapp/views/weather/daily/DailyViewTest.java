@@ -1,6 +1,7 @@
 package com.proit.weatherapp.views.weather.daily;
 
 import com.proit.weatherapp.config.Constant;
+import com.proit.weatherapp.core.OpenMetroService;
 import com.proit.weatherapp.dto.WeatherDataDaily;
 import com.proit.weatherapp.types.CachedData;
 import com.vaadin.flow.component.grid.Grid;
@@ -35,6 +36,6 @@ public class DailyViewTest extends SpringUIUnitTest {
         DailyWeatherView dailyWeatherView = navigate(DailyWeatherView.class);
         Grid<WeatherDataDaily> dailyWeatherGrid = dailyWeatherView.dailyWeatherGrid;
         var list = ((ListDataProvider<WeatherDataDaily>)dailyWeatherGrid.getDataProvider()).getItems();
-        assertEquals(16, list.size());
+        assertEquals(OpenMetroService.MAX_DAILY_FORECAST_RESULT, list.size());
     }
 }
