@@ -15,13 +15,17 @@
         <vaadin.version>24.4.4</vaadin.version>
         <spring.boot.version>3.2.7</spring.boot.version>
         <fasterxml.jacson.version>2.17.2</fasterxml.jacson.version>
+        <vaadin.proKey>{"username":"rkjohny@gmail.com","proKey":"pro-8d31e82e-d776-4c3a-864e-60488642f8d5"}</vaadin.proKey>
+        <vaadin.userKey>{"key":"user-838471a4-37f2-41e8-a1ed-bcbc3ad25052"}</vaadin.userKey>
     </properties>
+
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.7</version>
     </parent>
+
 
     <repositories>
         <repository>
@@ -179,7 +183,6 @@
             <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
-
     </dependencies>
 
     <build>
