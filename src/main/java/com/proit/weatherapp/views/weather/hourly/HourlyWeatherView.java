@@ -4,6 +4,7 @@ import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataHourly;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
@@ -48,17 +49,17 @@ public class HourlyWeatherView extends VerticalLayout {
     }
 
     private void configureGraph() {
-        hourlyChartConf.setTitle(i18NProvider.getTranslation("hourly.weather.page.graph.title", getLocale()));
+        hourlyChartConf.setTitle(i18NProvider.getTranslation("hourly.weather.page.graph.title", Utils.getLocale()));
 
         // Configure the X-axis to treat data as datetime
         XAxis xAxis = new XAxis();
         xAxis.setType(AxisType.DATETIME);
-        xAxis.setTitle(i18NProvider.getTranslation("hourly.weather.page.graph.xAxis.title", getLocale()));
+        xAxis.setTitle(i18NProvider.getTranslation("hourly.weather.page.graph.xAxis.title", Utils.getLocale()));
         hourlyChartConf.addxAxis(xAxis);
 
         // Configure the Y-axis
         YAxis yAxis = new YAxis();
-        yAxis.setTitle(i18NProvider.getTranslation("hourly.weather.page.graph.yAxis.title", getLocale()));
+        yAxis.setTitle(i18NProvider.getTranslation("hourly.weather.page.graph.yAxis.title", Utils.getLocale()));
         yAxis.setAllowDecimals(true);
         yAxis.setTickInterval(5);
         hourlyChartConf.addyAxis(yAxis);
@@ -77,10 +78,10 @@ public class HourlyWeatherView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("hourly.weather.page.header", getLocale(), cachedData.getCity(), cachedData.getCountry()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("hourly.weather.page.header", Utils.getLocale(), cachedData.getCity(), cachedData.getCountry()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
-        toolbar.add(new Span(i18NProvider.getTranslation("hourly.weather.page.header.date", getLocale(), cachedData.getDate())));
+        toolbar.add(new Span(i18NProvider.getTranslation("hourly.weather.page.header.date", Utils.getLocale(), cachedData.getDate())));
         return toolbar;
     }
 
@@ -101,7 +102,7 @@ public class HourlyWeatherView extends VerticalLayout {
 
     private DataSeries getTemperatureData(List<WeatherDataHourly> hourlyData) {
         DataSeries series = new DataSeries();
-        series.setName(i18NProvider.getTranslation("hourly.weather.page.graph.line.temperature.name", getLocale()));
+        series.setName(i18NProvider.getTranslation("hourly.weather.page.graph.line.temperature.name", Utils.getLocale()));
 
         hourlyData.forEach(data -> series.add(new DataSeriesItem(WeatherDataHourly.toEpochMilli(data), data.getTemperature())));
         return series;
@@ -109,7 +110,7 @@ public class HourlyWeatherView extends VerticalLayout {
 
     private DataSeries getPrecipitationData(List<WeatherDataHourly> hourlyData) {
         DataSeries series = new DataSeries();
-        series.setName(i18NProvider.getTranslation("hourly.weather.page.graph.line.precipitation.name", getLocale()));
+        series.setName(i18NProvider.getTranslation("hourly.weather.page.graph.line.precipitation.name", Utils.getLocale()));
 
         hourlyData.forEach(data -> series.add(new DataSeriesItem(WeatherDataHourly.toEpochMilli(data), data.getPrecipitation())));
         return series;
@@ -117,7 +118,7 @@ public class HourlyWeatherView extends VerticalLayout {
 
     private DataSeries getWindData(List<WeatherDataHourly> hourlyData) {
         DataSeries series = new DataSeries();
-        series.setName(i18NProvider.getTranslation("hourly.weather.page.graph.line.wind.name", getLocale()));
+        series.setName(i18NProvider.getTranslation("hourly.weather.page.graph.line.wind.name", Utils.getLocale()));
 
         hourlyData.forEach(data -> series.add(new DataSeriesItem(WeatherDataHourly.toEpochMilli(data), data.getWind())));
         return series;

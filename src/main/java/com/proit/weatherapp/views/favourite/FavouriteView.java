@@ -7,7 +7,6 @@ import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
-import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
 import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
@@ -33,7 +32,7 @@ public class FavouriteView extends VerticalLayout {
     private final LocationService locationService;
     private final WeatherService weatherService;
 
-    private final Grid<WeatherDataCurrent> temperatureGrid = new Grid<>(WeatherDataCurrent.class);
+    private final Grid<WeatherDataCurrent> weatherDataCurrentGrid = new Grid<>(WeatherDataCurrent.class);
 
     public FavouriteView(I18NProvider i18NProvider, LocationService locationService, WeatherService weatherService) {
         this.i18NProvider = i18NProvider;
@@ -48,13 +47,13 @@ public class FavouriteView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        temperatureGrid.addClassNames("location-grid");
-        temperatureGrid.setSizeFull();
+        weatherDataCurrentGrid.addClassNames("location-grid");
+        weatherDataCurrentGrid.setSizeFull();
 
-        temperatureGrid.setColumns("city", "country", "temperature", "precipitation", "wind", "windDirection", "cloudLow", "weatherCode");
-        temperatureGrid.getColumns().forEach(col -> col.setAutoWidth(true));
+        weatherDataCurrentGrid.setColumns("city", "country", "temperature", "precipitation", "wind", "windDirection", "cloudLow", "weatherCode");
+        weatherDataCurrentGrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
-        temperatureGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToDailyTemperatureView(valueChangeEvent.getValue()));
+        weatherDataCurrentGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToDailyTemperatureView(valueChangeEvent.getValue()));
     }
 
     private Component getToolbar() {
@@ -64,10 +63,10 @@ public class FavouriteView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("favorite.weather.page.header", getLocale()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("favorite.weather.page.header", Utils.getLocale()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
-        toolbar.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit", getLocale())));
+        toolbar.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit", Utils.getLocale())));
 
         var layoutUnits = new VerticalLayout();
         layoutUnits.setPadding(false);
@@ -75,18 +74,18 @@ public class FavouriteView extends VerticalLayout {
         layoutUnits.setMargin(false);
         layoutUnits.addClassName(LumoUtility.Padding.Left.LARGE);
 
-        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.temperature", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.wind", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.precipitation", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.cloud", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.weatherCode", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.temperature", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.wind", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.precipitation", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.cloud", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("favorite.weather.page.header.unit.weatherCode", Utils.getLocale())));
         toolbar.add(layoutUnits);
 
         return toolbar;
     }
 
     private VerticalLayout getContent() {
-        VerticalLayout content = new VerticalLayout(temperatureGrid);
+        VerticalLayout content = new VerticalLayout(weatherDataCurrentGrid);
         content.addClassNames("content");
         content.setSizeFull();
         return content;
@@ -106,7 +105,7 @@ public class FavouriteView extends VerticalLayout {
 
     private void updateGrid() {
         List<WeatherDataCurrent> results = getCurrentTemperatureForecast();
-        temperatureGrid.setItems(results);
+        weatherDataCurrentGrid.setItems(results);
     }
 
     private List<WeatherDataCurrent> getCurrentTemperatureForecast() {

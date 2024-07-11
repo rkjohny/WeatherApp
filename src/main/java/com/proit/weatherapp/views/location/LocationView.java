@@ -26,6 +26,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import org.slf4j.Logger;
@@ -44,24 +45,25 @@ import java.util.List;
 public class LocationView extends VerticalLayout {
     private static final Logger logger = LoggerFactory.getLogger(LocationView.class);
 
+    private static final int PAGE_SIZE = 10;
+
     private final LocationService locationService;
     private final I18NProvider i18NProvider;
 
-    private final Grid<Location> locationGrid = new Grid<>(Location.class);
-
+    final Grid<Location> locationGrid = new Grid<>(Location.class);
     private final Span pageInfoSpan = new Span();
-    private final TextField searchText = new TextField();
-    private final TextField filterText = new TextField();
+    final TextField searchText = new TextField();
+    final TextField filterText = new TextField();
     private Button prevButton;
     private Button nextButton;
     private int currentPage = 0;
     private int totalPage = 0;
-    private static final int PAGE_SIZE = 10;
 
 
     public LocationView(LocationService locationService, I18NProvider i18NProvider) {
         this.locationService = locationService;
         this.i18NProvider = i18NProvider;
+
 
         addClassName("list-view");
         setSizeFull();
@@ -111,8 +113,8 @@ public class LocationView extends VerticalLayout {
     }
 
     private Component getToolbar() {
-        String searchByCityText = i18NProvider.getTranslation("search.by.city", getLocale());
-        String filterByNameText = i18NProvider.getTranslation("filter.by.name", getLocale());
+        String searchByCityText = i18NProvider.getTranslation("search.by.city", Utils.getLocale());
+        String filterByNameText = i18NProvider.getTranslation("filter.by.name", Utils.getLocale());
 
         searchText.setPlaceholder(searchByCityText);
         searchText.setClearButtonVisible(true);
@@ -142,8 +144,8 @@ public class LocationView extends VerticalLayout {
     }
 
     private Component getPaginationControls() {
-        String prevButtonText = i18NProvider.getTranslation("button.prev", getLocale());
-        String nextButtonText = i18NProvider.getTranslation("button.next", getLocale());
+        String prevButtonText = i18NProvider.getTranslation("button.prev", Utils.getLocale());
+        String nextButtonText = i18NProvider.getTranslation("button.next", Utils.getLocale());
 
         prevButton = new Button(prevButtonText, buttonClickEvent -> navigateToPage(currentPage - 1));
         nextButton = new Button(nextButtonText, buttonClickEvent -> navigateToPage(currentPage + 1));
@@ -175,7 +177,7 @@ public class LocationView extends VerticalLayout {
 
     private void updatePageInfoSpan() {
         pageInfoSpan.setVisible(totalPage > 0);
-        String pageInfo = i18NProvider.getTranslation("page.current.info", getLocale(), (currentPage + 1), totalPage);
+        String pageInfo = i18NProvider.getTranslation("page.current.info", Utils.getLocale(), (currentPage + 1), totalPage);
         pageInfoSpan.setText(pageInfo);
     }
 

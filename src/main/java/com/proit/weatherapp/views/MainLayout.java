@@ -5,7 +5,6 @@ import com.proit.weatherapp.security.AuthenticatedUser;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.favourite.FavouriteView;
 import com.proit.weatherapp.views.location.LocationView;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
@@ -27,7 +26,6 @@ import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
 import java.io.ByteArrayInputStream;
-import java.util.Locale;
 import java.util.Optional;
 
 import org.vaadin.lineawesome.LineAwesomeIcon;
@@ -42,13 +40,11 @@ public class MainLayout extends AppLayout {
     private final I18NProvider i18NProvider;
     private final AuthenticatedUser authenticatedUser;
     private final AccessAnnotationChecker accessChecker;
-    private final Locale locale;
 
     public MainLayout(I18NProvider i18NProvider, AuthenticatedUser authenticatedUser, AccessAnnotationChecker accessChecker) {
         this.i18NProvider = i18NProvider;
         this.authenticatedUser = authenticatedUser;
         this.accessChecker = accessChecker;
-        this.locale = UI.getCurrent().getLocale();
 
         setPrimarySection(Section.DRAWER);
         addDrawerContent();
@@ -66,7 +62,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void addDrawerContent() {
-        Span appName = new Span(i18NProvider.getTranslation("app.name", locale));
+        Span appName = new Span(i18NProvider.getTranslation("app.name", Utils.getLocale()));
         appName.addClassNames(LumoUtility.FontWeight.SEMIBOLD, LumoUtility.FontSize.LARGE);
         Header header = new Header(appName);
 
@@ -79,10 +75,10 @@ public class MainLayout extends AppLayout {
         SideNav nav = new SideNav();
 
         if (accessChecker.hasAccess(LocationView.class)) {
-            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.search", locale), LocationView.class, LineAwesomeIcon.LOCATION_ARROW_SOLID.create()));
+            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.search", Utils.getLocale()), LocationView.class, LineAwesomeIcon.LOCATION_ARROW_SOLID.create()));
         }
         if (accessChecker.hasAccess(FavouriteView.class)) {
-            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.favourite", locale), FavouriteView.class, LineAwesomeIcon.STAR_SOLID.create()));
+            nav.addItem(new SideNavItem(i18NProvider.getTranslation("location.favourite", Utils.getLocale()), FavouriteView.class, LineAwesomeIcon.STAR_SOLID.create()));
         }
 
         return nav;
@@ -114,7 +110,7 @@ public class MainLayout extends AppLayout {
             div.getElement().getStyle().set("align-items", "center");
             div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
             userName.add(div);
-            userName.getSubMenu().addItem(i18NProvider.getTranslation("sign.out", locale), menuItemClickEvent -> {
+            userName.getSubMenu().addItem(i18NProvider.getTranslation("sign.out", Utils.getLocale()), menuItemClickEvent -> {
                 authenticatedUser.logout();
             });
 

@@ -16,6 +16,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Locale;
 
 
 public final class Utils {
@@ -80,5 +81,9 @@ public final class Utils {
         LocalDate currentDate = zonedDateTime.toLocalDate();
         // Format the date part as a string in the format "yyyy-MM-dd"
         return currentDate.format(Constant.APP_DATE_FORMATTER);
+    }
+
+    public static Locale getLocale() {
+        return Locale.getDefault();
     }
 }

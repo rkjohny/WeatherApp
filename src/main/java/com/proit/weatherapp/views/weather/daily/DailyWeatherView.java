@@ -4,6 +4,7 @@ import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataDaily;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
 import com.vaadin.flow.component.Component;
@@ -14,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.i18n.I18NProvider;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 
@@ -29,7 +31,7 @@ public class DailyWeatherView extends VerticalLayout {
     private final WeatherService weatherService;
 
     private CachedData cachedData;
-    private final Grid<WeatherDataDaily> temperatureGrid = new Grid<>(WeatherDataDaily.class);
+    final Grid<WeatherDataDaily> dailyWeatherGrid = new Grid<>(WeatherDataDaily.class);
 
     public DailyWeatherView(I18NProvider i18NProvider, WeatherService weatherService) {
         this.i18NProvider = i18NProvider;
@@ -44,13 +46,13 @@ public class DailyWeatherView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        temperatureGrid.addClassNames("location-grid");
-        temperatureGrid.setSizeFull();
+        dailyWeatherGrid.addClassNames("location-grid");
+        dailyWeatherGrid.setSizeFull();
 
-        temperatureGrid.setColumns("date", "maxTemperature", "minTemperature", "precipitation", "probability", "maxWind");
-        temperatureGrid.getColumns().forEach(col -> col.setAutoWidth(true));
+        dailyWeatherGrid.setColumns("date", "maxTemperature", "minTemperature", "precipitation", "probability", "maxWind");
+        dailyWeatherGrid.getColumns().forEach(col -> col.setAutoWidth(true));
 
-        temperatureGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToHourlyTemperatureView(valueChangeEvent.getValue()));
+        dailyWeatherGrid.asSingleSelect().addValueChangeListener(valueChangeEvent -> goToHourlyTemperatureView(valueChangeEvent.getValue()));
     }
 
     private Component getToolbar() {
@@ -60,7 +62,7 @@ public class DailyWeatherView extends VerticalLayout {
         toolbar.setMargin(false);
         toolbar.addClassNames(LumoUtility.Padding.Left.MEDIUM);
 
-        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", getLocale(), cachedData.getCity(), cachedData.getCountry()));
+        Span pageHeader = new Span(i18NProvider.getTranslation("daily.weather.page.header", Utils.getLocale(), cachedData.getCity(), cachedData.getCountry()));
         pageHeader.addClassNames(LumoUtility.FontSize.LARGE, LumoUtility.FontWeight.SEMIBOLD);
         toolbar.add(pageHeader);
         toolbar.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit", getLocale())));
@@ -71,17 +73,17 @@ public class DailyWeatherView extends VerticalLayout {
         layoutUnits.setMargin(false);
         layoutUnits.addClassName(LumoUtility.Padding.Left.LARGE);
 
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.temperature", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.wind", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.precipitation", getLocale())));
-        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.probability", getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.temperature", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.wind", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.precipitation", Utils.getLocale())));
+        layoutUnits.add(new Span(i18NProvider.getTranslation("daily.weather.page.header.unit.probability", Utils.getLocale())));
         toolbar.add(layoutUnits);
 
         return toolbar;
     }
 
     private VerticalLayout getContent() {
-        VerticalLayout content = new VerticalLayout(temperatureGrid);
+        VerticalLayout content = new VerticalLayout(dailyWeatherGrid);
         content.addClassNames("content");
         content.setSizeFull();
         return content;
@@ -95,7 +97,7 @@ public class DailyWeatherView extends VerticalLayout {
 
     private void updateGrid() {
         List<WeatherDataDaily> results = getDailyTemperatureForecast();
-        temperatureGrid.setItems(results);
+        dailyWeatherGrid.setItems(results);
     }
 
     private List<WeatherDataDaily> getDailyTemperatureForecast() {
