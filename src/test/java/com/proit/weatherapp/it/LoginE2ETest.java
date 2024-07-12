@@ -18,9 +18,6 @@ public class LoginE2ETest extends BrowserTestBase {
     @Autowired
     Environment environment;
 
-    static {
-        System.setProperty("vaadin.launch-browser", "false");
-    }
 
     @BeforeEach
     void openBrowser() {

@@ -18,9 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class DailyViewTest extends SpringUIUnitTest {
 
-    static {
-        System.setProperty("vaadin.launch-browser", "false");
-    }
 
     @AfterEach
     void logout() {

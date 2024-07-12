@@ -17,9 +17,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 @SpringBootTest
 public class LocationViewTest extends SpringUIUnitTest {
 
-    static {
-        System.setProperty("vaadin.launch-browser", "false");
-    }
 
     @AfterEach
     void logout() {

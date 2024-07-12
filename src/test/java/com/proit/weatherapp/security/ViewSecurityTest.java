@@ -12,9 +12,6 @@ import org.springframework.security.test.context.support.WithAnonymousUser;
 @SpringBootTest
 public class ViewSecurityTest extends SpringUIUnitTest {
 
-    static {
-        System.setProperty("vaadin.launch-browser", "false");
-    }
 
     @Test
     @WithAnonymousUser
