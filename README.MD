@@ -34,14 +34,14 @@ mvn spring-boot:run -Dspring.profiles.active=prod
 ````
 ### Run in Docker
 ````
-docker build .
+docker build -t weather_app .
 docker-compose up
 ````
 
 After application is running, there are 4 users to use: <b>david</b>, <b>john</b>, <b>emma</b> and <b>olivia</b>. Password for all users is <b>password</b>.
 
 ### Known Issue:
-* Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose</b> because <b>docker build</b> will not build the project.
+* Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
 
 ### Run in Local Machine
 * If there is any issue in docker image run in local machine.
