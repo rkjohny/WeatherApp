@@ -45,7 +45,7 @@ After application is running, there are 4 users to use: <b>david</b>, <b>john</b
 
 ### Run in Local Machine
 * If there is any issue in docker image run in local machine.
-* I am wondering license related issue may arise, since docker image is running <b>offline</b>, I could not retrieve either <b>offlineKey</b> or <b>server license key</b> for my trial license.
+* I am wondering license related issue may arise, since docker image may run <b>offline</b>, I could not retrieve either <b>offlineKey</b> or <b>server license key</b> for my trial license.
 * To run locally please follow the steps:
   * Install postgres, if not installed
   * Create database <b>weather_app</b>
