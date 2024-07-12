@@ -39,4 +39,4 @@ docker-compose up
 ````
 
 ### Known Issue:
-Please build the project by <b>Maven</b> before running <b>docker-compose</b> because <b>docker build</b> will not build the project.
+Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose</b> because <b>docker build</b> will not build the project.
