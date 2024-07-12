@@ -2,53 +2,51 @@ package com.proit.weatherapp.views.login;
 
 import com.proit.weatherapp.security.AuthenticatedUser;
 import com.proit.weatherapp.util.Utils;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.login.LoginForm;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.login.LoginI18n;
+import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.i18n.I18NProvider;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.internal.RouteUtil;
+import com.vaadin.flow.server.VaadinService;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@Route("login")
-@PageTitle("Login | Vaadin CRM")
 @AnonymousAllowed
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+@PageTitle("Login")
+@Route(value = "login")
+public class LoginView extends LoginOverlay implements BeforeEnterObserver {
 
     private final I18NProvider i18NProvider;
     private final AuthenticatedUser authenticatedUser;
 
-    private final LoginForm login = new LoginForm();
 
     public LoginView(I18NProvider i18NProvider, AuthenticatedUser authenticatedUser) {
         this.i18NProvider = i18NProvider;
         this.authenticatedUser = authenticatedUser;
 
-        //addClassName("login-view");
-        setSizeFull();
-        setAlignItems(Alignment.CENTER);
-        setJustifyContentMode(JustifyContentMode.CENTER);
-
-        login.setAction("login");
-        login.setForgotPasswordButtonVisible(false);
+        setAction(RouteUtil.getRoutePath(VaadinService.getCurrent().getContext(), getClass()));
 
         String appName = i18NProvider.getTranslation("app.name", Utils.getLocale());
-        add(new H1(appName));
-        add(login);
+
+        LoginI18n i18n = LoginI18n.createDefault();
+        i18n.setHeader(new LoginI18n.Header());
+        i18n.getHeader().setTitle(appName);
+        i18n.setAdditionalInformation(null);
+        setI18n(i18n);
+
+        setForgotPasswordButtonVisible(false);
+        setOpened(true);
     }
 
     @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-		if (authenticatedUser.get().isPresent()) {
-			// Already logged in
-			setVisible(false);
-			beforeEnterEvent.forwardTo("");
-		}
-
-        // inform the user about an authentication error
-		login.setError(beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("error"));
+    public void beforeEnter(BeforeEnterEvent event) {
+        if (authenticatedUser.get().isPresent()) {
+            // Already logged in
+            setOpened(false);
+            event.forwardTo("");
+        }
+        setError(event.getLocation().getQueryParameters().getParameters().containsKey("error"));
     }
 }
