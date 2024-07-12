@@ -6,7 +6,9 @@ import com.proit.weatherapp.dto.Location;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.testbench.unit.SpringUIUnitTest;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -16,8 +18,16 @@ import org.springframework.security.test.context.support.WithMockUser;
 public class LocationViewTest extends SpringUIUnitTest {
 
     static {
-        // Prevent Vaadin Development mode to launch browser window
         System.setProperty("vaadin.launch-browser", "false");
+    }
+
+    @AfterEach
+    void logout() {
+        if (VaadinSession.getCurrent() != null) {
+            if (VaadinSession.getCurrent().getSession() != null) {
+                VaadinSession.getCurrent().getSession().invalidate();
+            }
+        }
     }
 
     @Test
