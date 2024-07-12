@@ -42,7 +42,7 @@ After application is running, there are 4 users to use: <b>david</b>, <b>john</b
 
 ### Known Issue:
 * Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose</b> because <b>docker build</b> will not build the project.
-* Docker container is running but pages are not served. I am wondering this is because any license related issue, since in docker image is running <b>offline</b>, I could not retrieve either <b>offlineKey</b> or <b>server license key</b> for my trial license.
+* Docker container is running but pages are not served. I am wondering this may be a license related issue, since docker image is running <b>offline</b>, I could not retrieve either <b>offlineKey</b> or <b>server license key</b> for my trial license.
 * To run locally please follow the steps:
   * Install postgres, if not installed
   * Create database <b>weather_app</b>
