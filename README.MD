@@ -24,15 +24,15 @@ so that you can revert the changes after testing the app.
 </b>
 </p>
 
-## Build
+### Build
 ````
 mvn package -Pproduction
 ````
-## Run
+### Run
 ````
 mvn spring-boot:run -Dspring.profiles.active=prod
 ````
-## Docker
+### Docker
 ````
 docker-compose up --build
 ````
