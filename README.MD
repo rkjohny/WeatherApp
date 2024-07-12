@@ -1,6 +1,6 @@
 # WeatherApp
 
-Sample weather app using OpenMetro weather service. This is my first work in Vaadin, so as a starting point I have used Vaadin Flow with Spring Boot. For <b>chart</b> and <b>unit testing</b> 
+Sample weather app using OpenMetro weather service. I have used Vaadin Flow with Spring Boot. For <b>chart</b> and <b>unit testing</b> 
 I have used <b>Vaadin Pro</b> with 14 days trial license.
 
 ### Language Framework and Tools:
