@@ -1,29 +1,41 @@
-# Weather Application
+# WeatherApp
 
-This is the job interview task for software developer position
+Sample weather app using OpenMetro weather service. I have used Vaadin Flow with Spring Boot. For chart and unit testing 
+I used Vaadin Pro with 14 days trial license.
 
-## What to do
-* Fork the repository
-* After work is done, make a pull request and notify me by email
+### Language Framework and Tools:
+* Java 21
+* Spring Boot 3.2.7
+* Vaadin 24.4.4
+* Postgres 16rc1
+* Docker 25.0.3
 
-## Task description
-You need to use the Weather API provided here https://open-meteo.com/en to make the weather application. 
-1. Call the API to get the locations by city name. Make the paging available with 10 items per page and a filter to filter by location name.
-2. When clicked on the location it should show the weather forecast for the location with the temperature, surface wind and rain hourly. The interface should let you first see the daily forecast and when clicked it then should show the forecast hourly for the day you selected.
-3. If you UI contains a chart it is a bonus. The interface should be convenient for user and rely on best usability and design practises
-4. Only logged on users should be able to see the weather forecasts.
-5. User should be able to mark the location favourite and have the favourite location list for quick access.
+### Build Tool:
+* Apache Maven 3.9.8
 
-All the other specific requirements are up to you
+### Prepare environment
+If you have a Vaadin Pro subscription you can use that license, otherwise copy the <b>license-file\proKey</b> and
+<b>license-file\userKey</b> files in you <b>USER_HOME\.vaadin\ </b> directory.
+<p>
+<b>
+Important:
+If files with the same name exists in your local machine in USER_HOME directory, make sure to keep a backup copy, 
+so that you can revert the changes after testing the app.
+</b>
+</p>
 
-## Technical requirements
-* Use  Vaadin (https://vaadin.com/) framework for the frontend. For chart you may use some different framework
-* For backend use Java EE
-* Use any database (Postgres, Oracle, etc.)
-* Make a Maven project
+## Build
+````
+mvn package -Pproduction
+````
+## Run
+````
+mvn spring-boot:run -Dspring.profiles.active=prod
+````
+## Docker
+````
+docker-compose up --build
+````
 
-## Main points
-* Structure your code
-* Use best practises
-* Use naming conventions
-* Show understanding of software development concepts
+### Known Issue:
+Please build the project by <b>Maven</b> before running <b>docker-compose</b> because <b>docker build</b> will not build the project.
