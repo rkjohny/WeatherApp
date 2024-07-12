@@ -102,17 +102,15 @@ public class MainLayout extends AppLayout {
             userMenu.setThemeName("tertiary-inline contrast");
 
             MenuItem userName = userMenu.addItem("");
-            Div div = new Div();
-            div.add(avatar);
-            div.add(user.getName());
-            div.add(new Icon("lumo", "dropdown"));
-            div.getElement().getStyle().set("display", "flex");
-            div.getElement().getStyle().set("align-items", "center");
-            div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
-            userName.add(div);
-            userName.getSubMenu().addItem(i18NProvider.getTranslation("sign.out", Utils.getLocale()), menuItemClickEvent -> {
-                authenticatedUser.logout();
-            });
+            Div signOutDiv = new Div();
+            signOutDiv.add(avatar);
+            signOutDiv.add(user.getName());
+            signOutDiv.add(new Icon("lumo", "dropdown"));
+            signOutDiv.getElement().getStyle().set("display", "flex");
+            signOutDiv.getElement().getStyle().set("align-items", "center");
+            signOutDiv.getElement().getStyle().set("gap", "var(--lumo-space-s)");
+            userName.add(signOutDiv);
+            userName.getSubMenu().addItem(i18NProvider.getTranslation("sign.out", Utils.getLocale()), menuItemClickEvent -> authenticatedUser.logout());
 
             layout.add(userMenu);
         } else {
