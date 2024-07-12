@@ -34,7 +34,8 @@ mvn spring-boot:run -Dspring.profiles.active=prod
 ````
 ### Docker
 ````
-docker-compose up --build
+docker build .
+docker-compose up
 ````
 
 ### Known Issue:
