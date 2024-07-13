@@ -40,6 +40,11 @@ docker-compose up
 
 After application is running, there are 4 users to use: <b>david</b>, <b>john</b>, <b>emma</b> and <b>olivia</b>. Password for all users is <b>password</b>.
 
+### Login
+````
+http://localhost:8080/login
+````
+
 ### Known Issue:
 * Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
 
