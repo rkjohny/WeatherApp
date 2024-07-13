@@ -49,7 +49,7 @@ http://localhost:8080/login
 * Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
 
 ### Run in Local Machine
-* If there is any issue in docker image run in local machine.
+* If there is any issue in running docker image, run the application in local machine.
 * I am wondering license related issue may arise. I could not retrieve either <b>offlineKey</b> or <b>server license key</b> for my trial license.
 * To run locally please follow the steps:
   * Install postgres, if not installed
