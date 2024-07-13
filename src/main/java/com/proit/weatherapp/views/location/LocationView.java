@@ -128,7 +128,7 @@ public class LocationView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
         filterText.setSuffixComponent(LineAwesomeIcon.FILTER_SOLID.create());
         filterText.addValueChangeListener(valueChangeEvent -> refreshGrid());
-        filterText.addKeyPressListener(Key.ENTER, enterEvent -> refreshGrid());
+        //filterText.addKeyPressListener(Key.ENTER, enterEvent -> refreshGrid());
 
         var toolbar = new HorizontalLayout(searchText, filterText);
         toolbar.addClassName("toolbar");
