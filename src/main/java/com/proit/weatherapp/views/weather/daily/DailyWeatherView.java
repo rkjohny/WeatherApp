@@ -1,9 +1,10 @@
 package com.proit.weatherapp.views.weather.daily;
 
+import com.proit.weatherapp.api.WeatherApi;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataDaily;
-import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.types.GetDailyWeatherInput;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
@@ -15,7 +16,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.i18n.I18NProvider;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 
@@ -28,14 +28,14 @@ import java.util.List;
 public class DailyWeatherView extends VerticalLayout {
 
     private final I18NProvider i18NProvider;
-    private final WeatherService weatherService;
+    private final WeatherApi weatherApi;
 
     private CachedData cachedData;
     final Grid<WeatherDataDaily> dailyWeatherGrid = new Grid<>(WeatherDataDaily.class);
 
-    public DailyWeatherView(I18NProvider i18NProvider, WeatherService weatherService) {
+    public DailyWeatherView(I18NProvider i18NProvider, WeatherApi weatherApi) {
         this.i18NProvider = i18NProvider;
-        this.weatherService = weatherService;
+        this.weatherApi = weatherApi;
         cachedData = (CachedData) VaadinSession.getCurrent().getAttribute(Constant.APP_CACHE_DATA);
 
         addClassName("list-view");
@@ -101,6 +101,10 @@ public class DailyWeatherView extends VerticalLayout {
     }
 
     private List<WeatherDataDaily> getDailyTemperatureForecast() {
-        return weatherService.getDailyWeather(cachedData.getLatitude(), cachedData.getLongitude(), cachedData.getTimezone());
+        GetDailyWeatherInput input = new GetDailyWeatherInput();
+        input.setLatitude(cachedData.getLatitude());
+        input.setLongitude(cachedData.getLongitude());
+        input.setTimezone(cachedData.getTimezone());
+        return weatherApi.getDailyWeather(input).getDataDailies();
     }
 }

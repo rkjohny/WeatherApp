@@ -91,7 +91,7 @@ public class WeatherService {
      * @return the {@link WeatherResponseCurrent} the current weather data
      */
     @NotNull
-    public WeatherResponseCurrent getCurrentWeather(Double latitude, Double longitude, String timezone) {
+    private WeatherResponseCurrent getCurrentWeather(Double latitude, Double longitude, String timezone) {
         WeatherResponseCurrent responseCurrent = new WeatherResponseCurrent();
 
         if (latitude != null && longitude != null & !StringUtils.isBlank(timezone)) {
@@ -112,7 +112,7 @@ public class WeatherService {
      * @return the {@link List<WeatherDataCurrent>} the list of current weather data for the specified location list
      */
     @NotNull
-    public List<WeatherDataCurrent> getCurrentWeather(List<Location> locations) {
+    public List<WeatherDataCurrent> getCurrentWeather(@NotNull List<Location> locations) {
         List<WeatherDataCurrent> weatherDataCurrents = new ArrayList<>();
         locations.forEach(location -> {
             WeatherResponseCurrent response = getCurrentWeather(location.getLatitude(), location.getLongitude(), location.getTimezone());

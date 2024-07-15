@@ -1,10 +1,12 @@
 package com.proit.weatherapp.views.favourite;
 
+import com.proit.weatherapp.api.WeatherApi;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataCurrent;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.types.GetCurrentWeatherInput;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.hourly.HourlyWeatherView;
@@ -30,14 +32,14 @@ public class FavouriteView extends VerticalLayout {
 
     private final I18NProvider i18NProvider;
     private final LocationService locationService;
-    private final WeatherService weatherService;
+    private final WeatherApi weatherApi;
 
     private final Grid<WeatherDataCurrent> weatherDataCurrentGrid = new Grid<>(WeatherDataCurrent.class);
 
-    public FavouriteView(I18NProvider i18NProvider, LocationService locationService, WeatherService weatherService) {
+    public FavouriteView(I18NProvider i18NProvider, LocationService locationService, WeatherApi weatherApi) {
         this.i18NProvider = i18NProvider;
         this.locationService = locationService;
-        this.weatherService = weatherService;
+        this.weatherApi = weatherApi;
 
         addClassName("list-view");
         setSizeFull();
@@ -110,6 +112,8 @@ public class FavouriteView extends VerticalLayout {
 
     private List<WeatherDataCurrent> getCurrentTemperatureForecast() {
         var favLocations = locationService.getFavoriteLocations();
-        return weatherService.getCurrentWeather(favLocations);
+        GetCurrentWeatherInput input = new GetCurrentWeatherInput();
+        input.setLocations(favLocations);
+        return weatherApi.getCurrentWeather(input).getDataCurrents();
     }
 }

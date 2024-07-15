@@ -43,7 +43,8 @@ public class LocationService {
      * Get all the location by a city filtered by a filter text.
      *
      * @param city name of the location
-     * @return the {@link List<Location>} the list of the location by the name(city)
+     * @param filterText optional text by which the list of locations will be filtered
+     * @return {@link List<Location>} the list of the location by the name(city)
      */
     @NotNull
     public List<Location> getLocations(String city, String filterText) {
@@ -68,13 +69,15 @@ public class LocationService {
      * Check if a location has been marked as favorite by the current logged-in user
      *
      * @param location the {@link Location} object to check
+     * @return true if the location has been marked as favourite
      */
-    public void checkFavorite(Location location) {
+    public boolean checkFavorite(@NotNull Location location) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!StringUtils.isBlank(username)) {
             Optional<User> user = userService.getByUsername(username);
             user.ifPresent(u -> checkFavorite(u, location));
         }
+        return location.isFavorite();
     }
 
     /**
@@ -82,23 +85,27 @@ public class LocationService {
      *
      * @param user the {@link User} object to check
      * @param location the {@link Location} object to check
+     * @return true if the location has been marked as favourite
      */
-    public void checkFavorite(User user, Location location) {
+    private boolean checkFavorite(@NotNull User user, @NotNull Location location) {
         boolean favorite = user.getFavouriteLocations().stream().anyMatch(fu -> Objects.equals(fu.getLocationId(), location.getId()));
         location.setFavorite(favorite);
+        return location.isFavorite();
     }
 
     /**
      * Toggle the favorite mark of a location by the current logged-in user
      *
      * @param location the {@link Location} object to toggle
+     * @return true if the location has been marked as favourite after toggling, false otherwise
      */
-    public void toggleFavorite(Location location) {
+    public boolean toggleFavorite(@NotNull Location location) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         if (!StringUtils.isBlank(username)) {
             Optional<User> user = userService.getByUsername(username);
             user.ifPresent(u -> toggleFavorite(u, location));
         }
+        return location.isFavorite();
     }
 
     /**
@@ -106,8 +113,9 @@ public class LocationService {
      *
      * @param user the {@link User} who will toggle the favorite mark
      * @param location the {@link Location} object to toggle
+     * @return true if the location has been marked as favourite after toggling, false otherwise
      */
-    public void toggleFavorite(User user, Location location) {
+    private boolean toggleFavorite(@NotNull User user, @NotNull Location location) {
         checkFavorite(user, location);
         if (!location.isFavorite()) {
             user.getFavouriteLocations().add(FavouriteLocation.fromLocation(user, location));
@@ -117,12 +125,13 @@ public class LocationService {
             location.setFavorite(!removed);
         }
         userService.save(user);
+        return location.isFavorite();
     }
 
     /**
      * Get all the locations marked as favorite by the current logged-in user
      *
-     * @return the {@link List<Location>} the list of the locations marked as favorite
+     * @return {@link List<Location>} the list of the locations marked as favorite
      */
     public List<Location> getFavoriteLocations() {
         List<Location> locations = new ArrayList<>();

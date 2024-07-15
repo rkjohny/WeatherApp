@@ -1,9 +1,10 @@
 package com.proit.weatherapp.views.weather.hourly;
 
+import com.proit.weatherapp.api.WeatherApi;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.WeatherDataHourly;
-import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.types.GetHourlyWeatherInput;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.vaadin.flow.component.Component;
@@ -26,7 +27,7 @@ import java.util.List;
 @PermitAll
 public class HourlyWeatherView extends VerticalLayout {
     private final I18NProvider i18NProvider;
-    private final WeatherService weatherService;
+    private final WeatherApi weatherApi;
 
     private final CachedData cachedData;
 
@@ -34,9 +35,9 @@ public class HourlyWeatherView extends VerticalLayout {
     private final Configuration hourlyChartConf;
 
 
-    public HourlyWeatherView(I18NProvider i18NProvider, WeatherService weatherService) {
+    public HourlyWeatherView(I18NProvider i18NProvider, WeatherApi weatherApi) {
         this.i18NProvider = i18NProvider;
-        this.weatherService = weatherService;
+        this.weatherApi = weatherApi;
         cachedData = (CachedData) VaadinSession.getCurrent().getAttribute(Constant.APP_CACHE_DATA);
 
         hourlyChart = new Chart(ChartType.LINE);
@@ -125,6 +126,11 @@ public class HourlyWeatherView extends VerticalLayout {
     }
 
     private List<WeatherDataHourly> getAPIResults() {
-        return weatherService.getHourlyWeather(cachedData.getLatitude(), cachedData.getLongitude(), cachedData.getTimezone(), cachedData.getDate());
+        GetHourlyWeatherInput input = new GetHourlyWeatherInput();
+        input.setLatitude(cachedData.getLatitude());
+        input.setLongitude(cachedData.getLongitude());
+        input.setTimezone(cachedData.getTimezone());
+        input.setDate(cachedData.getDate());
+        return weatherApi.getHourlyWeather(input).getDataHourlies();
     }
 }

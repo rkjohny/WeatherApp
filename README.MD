@@ -13,6 +13,19 @@ I have used <b>Vaadin Pro</b> with 14 days trial license.
 ### Build Tool:
 * Apache Maven 3.9.8
 
+### Feature
+* Searching and filtering locations by city name
+* Daily weather forecast for a specific city
+* Hourly weather forecast for a specific city and day
+* Mark/Unmark favourite cities
+* Hourly forecast of favourite cities
+* Global error handling
+* Centralized exception handling for all APIs
+* API documentation with OpenApi specification
+* Initialized with sample data to test API
+* Local log file
+* Unit testing
+
 ### Prepare environment:
 If you have a Vaadin Pro subscription you can use that license, otherwise copy the <b>license-file\proKey</b> and
 <b>license-file\userKey</b> files in you <b>%userprofile%\.vaadin\ </b> directory.
@@ -46,7 +59,8 @@ http://localhost:8080/login
 ````
 
 ### Known Issue:
-* Please build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
+* Building project with <b>Docker</b> works but pages were not server, this is because the licensing issue.  
+* Build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
 
 ### Run in Local Machine
 * If there is any issue in running docker image, run the application in local machine.
@@ -57,5 +71,3 @@ http://localhost:8080/login
   * Update the property <b>spring.datasource.url</b>, <b>spring.datasource.username</b> and <b>spring.datasource.password</b> in <b>src/main/resources/application.properties</b> file
   * Run the application by Maven
  
-
-

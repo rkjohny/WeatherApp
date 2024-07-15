@@ -1,9 +1,9 @@
 package com.proit.weatherapp.views.location;
 
+import com.proit.weatherapp.api.LocationApi;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.dto.Location;
-import com.proit.weatherapp.services.LocationService;
-import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.types.*;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.daily.DailyWeatherView;
@@ -26,7 +26,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.VaadinSession;
-import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
 import org.slf4j.Logger;
@@ -47,7 +46,7 @@ public class LocationView extends VerticalLayout {
 
     private static final int PAGE_SIZE = 10;
 
-    private final LocationService locationService;
+    private final LocationApi locationApi;
     private final I18NProvider i18NProvider;
 
     final Grid<Location> locationGrid = new Grid<>(Location.class);
@@ -60,8 +59,8 @@ public class LocationView extends VerticalLayout {
     private int totalPage = 0;
 
 
-    public LocationView(LocationService locationService, I18NProvider i18NProvider) {
-        this.locationService = locationService;
+    public LocationView(LocationApi locationApi, I18NProvider i18NProvider) {
+        this.locationApi = locationApi;
         this.i18NProvider = i18NProvider;
 
 
@@ -101,13 +100,21 @@ public class LocationView extends VerticalLayout {
     }
 
     private Component addFavoriteButton(Location location) {
-        locationService.checkFavorite(location);
+        CheckFavouriteInput input = new CheckFavouriteInput();
+        input.setLocation(location);
+        CheckFavouriteOutput output = locationApi.checkFavorite(input);
+        location.setFavorite(output.isFavourite());
+
         var icon = location.isFavorite() ? LineAwesomeIcon.STAR_SOLID.create() : LineAwesomeIcon.STAR.create();
         return new Button(icon, buttonClickEvent -> toggleFavorite(buttonClickEvent, location));
     }
 
     private void toggleFavorite(ClickEvent<Button> buttonClickEvent,  Location location) {
-        locationService.toggleFavorite(location);
+        ToggleFavouriteInput input = new ToggleFavouriteInput();
+        input.setLocation(location);
+        ToggleFavouriteOutput output = locationApi.toggleFavorite(input);
+        location.setFavorite(output.isFavourite());
+
         var icon = location.isFavorite() ? LineAwesomeIcon.STAR_SOLID.create() : LineAwesomeIcon.STAR.create();
         buttonClickEvent.getSource().setIcon(icon);
     }
@@ -206,6 +213,9 @@ public class LocationView extends VerticalLayout {
     }
 
     private List<Location> getAllSearchResults() {
-        return locationService.getLocations(searchText.getValue(), filterText.getValue());
+        GetLocationInput input = new GetLocationInput();
+        input.setCity(searchText.getValue());
+        input.setFilter(filterText.getValue());
+        return locationApi.getLocations(input).getLocations();
     }
 }
