@@ -7,7 +7,7 @@ I have used <b>Vaadin Pro</b> with 14 days trial license.
 * Java 21
 * Spring Boot 3.2.7
 * Vaadin 24.4.4
-* * Vaadin Chart 24.4.4
+* Vaadin Chart 24.4.4
 * Postgres 16rc1
 * Docker 25.0.3
 
