@@ -51,6 +51,10 @@ mvn spring-boot:run -Dspring.profiles.active=prod
 docker build -t weather_app .
 docker-compose up
 ````
+or
+````
+docker-compose up --build
+````
 
 After application is running, there are 4 users to use: <b>david</b>, <b>john</b>, <b>emma</b> and <b>olivia</b>. Password for all users is <b>password</b>.
 
@@ -59,8 +63,14 @@ After application is running, there are 4 users to use: <b>david</b>, <b>john</b
 http://localhost:8080/login
 ````
 
+### Swagger Url
+````
+http://localhost:8080/swagger-ui/index.html
+````
+
 ### Known Issue:
-* Building project with <b>Docker</b> works but pages were not server, this is because the licensing issue.  
+* Calling API through swagger-ui will return Forbidden (status: 403). This is because authorization issue, since swagger url will not contain the session. Need to work on it.
+* Building project with <b>Docker</b> works but pages were not server, this is because the licensing issue. Work around: follow the following step
 * Build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
 
 ### Run in Local Machine
