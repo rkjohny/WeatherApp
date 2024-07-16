@@ -40,7 +40,7 @@ public class LocationApi {
     /**
      * Check if a location has been marked as favorite by the current logged-in user
      *
-     * @param input the {@link CheckFavouriteInput} object that hold the location's id to check
+     * @param input the {@link CheckFavouriteInput} object that hold the location to check
      * @return @{@link CheckFavouriteOutput} the object that holds a boolean member favourite which indicates
      * whether the location has been marked as favorite
      */

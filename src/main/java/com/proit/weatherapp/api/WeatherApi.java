@@ -48,12 +48,11 @@ public class WeatherApi {
     }
 
     /**
-     * Get the current weather information of a list of locations specified by latitude, longitude and the timezone
+     * Get the current weather information of a list of locations
      *
-     * @param input the {@link GetCurrentWeatherInput} object that contains the latitude, longitude and timezone
-     *              of a location whose current (for 24 hours) weather forecast will be returned
+     * @param input the {@link GetCurrentWeatherInput} object that contains the list of location whose current weather forecast will be returned
      * @return {@link GetCurrentWeatherOutput} object which contains list of {@link WeatherDataCurrent} object that
-     * contains the hourly weather forecast data
+     * contains the current weather forecast data
      */
     public GetCurrentWeatherOutput getCurrentWeather(GetCurrentWeatherInput input) {
         GetCurrentWeatherHelper helper = getCurrentWeatherHelperProvider.getObject();
