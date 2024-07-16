@@ -6,6 +6,7 @@ import com.proit.weatherapp.core.GetHourlyWeatherHelper;
 import com.proit.weatherapp.dto.*;
 import com.proit.weatherapp.services.WeatherService;
 import com.proit.weatherapp.types.*;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@PermitAll
 public class WeatherApi {
 
     private final ObjectProvider<GetDailyWeatherHelper> getDailyWeatherHelperProvider;

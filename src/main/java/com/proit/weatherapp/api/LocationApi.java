@@ -8,6 +8,7 @@ import com.proit.weatherapp.core.ToggleFavouriteHelper;
 import com.proit.weatherapp.dto.Location;
 import com.proit.weatherapp.services.LocationService;
 import com.proit.weatherapp.types.*;
+import jakarta.annotation.security.PermitAll;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@PermitAll
 public class LocationApi {
 
     private final ObjectProvider<GetLocationHelper> getLocationHelperProvider;
