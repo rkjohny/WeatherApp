@@ -2,8 +2,8 @@ package com.proit.weatherapp.core;
 
 
 import com.proit.weatherapp.error.GeocodingException;
-import com.proit.weatherapp.types.OpenMetroAPIParamValue;
-import com.proit.weatherapp.types.OpenMetroAPIParam;
+import com.proit.weatherapp.dto.types.OpenMetroAPIParamValue;
+import com.proit.weatherapp.dto.types.OpenMetroAPIParam;
 import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;

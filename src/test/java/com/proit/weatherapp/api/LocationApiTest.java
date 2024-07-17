@@ -1,8 +1,8 @@
 package com.proit.weatherapp.api;
 
 import com.proit.weatherapp.dto.Location;
-import com.proit.weatherapp.types.GetLocationInput;
-import com.proit.weatherapp.types.GetLocationOutput;
+import com.proit.weatherapp.dto.types.GetLocationInput;
+import com.proit.weatherapp.dto.types.GetLocationOutput;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

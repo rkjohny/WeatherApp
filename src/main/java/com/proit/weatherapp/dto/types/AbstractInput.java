@@ -1,4 +1,4 @@
-package com.proit.weatherapp.types;
+package com.proit.weatherapp.dto.types;
 
 import java.io.Serial;
 import java.io.Serializable;

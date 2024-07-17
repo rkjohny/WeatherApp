@@ -2,8 +2,9 @@ package com.proit.weatherapp.views.location;
 
 import com.proit.weatherapp.api.LocationApi;
 import com.proit.weatherapp.config.Constant;
+import com.proit.weatherapp.dto.CachedData;
 import com.proit.weatherapp.dto.Location;
-import com.proit.weatherapp.types.*;
+import com.proit.weatherapp.dto.types.*;
 import com.proit.weatherapp.util.Utils;
 import com.proit.weatherapp.views.MainLayout;
 import com.proit.weatherapp.views.weather.daily.DailyWeatherView;

@@ -2,16 +2,13 @@ package com.proit.weatherapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.proit.weatherapp.config.Constant;
-import com.proit.weatherapp.types.OpenMetroAPIParam;
-import com.proit.weatherapp.types.OpenMetroAPIParamValue;
+import com.proit.weatherapp.dto.types.OpenMetroAPIParamValue;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Getter

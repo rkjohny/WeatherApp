@@ -1,4 +1,4 @@
-package com.proit.weatherapp.types;
+package com.proit.weatherapp.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,8 +1,8 @@
 package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.services.WeatherService;
-import com.proit.weatherapp.types.GetCurrentWeatherInput;
-import com.proit.weatherapp.types.GetCurrentWeatherOutput;
+import com.proit.weatherapp.dto.types.GetCurrentWeatherInput;
+import com.proit.weatherapp.dto.types.GetCurrentWeatherOutput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;

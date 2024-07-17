@@ -1,8 +1,8 @@
 package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.services.LocationService;
-import com.proit.weatherapp.types.GetLocationInput;
-import com.proit.weatherapp.types.GetLocationOutput;
+import com.proit.weatherapp.dto.types.GetLocationInput;
+import com.proit.weatherapp.dto.types.GetLocationOutput;
 import com.proit.weatherapp.util.Sanitizer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

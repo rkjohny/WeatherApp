@@ -1,8 +1,8 @@
 package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.services.LocationService;
-import com.proit.weatherapp.types.GetFavouriteLocationInput;
-import com.proit.weatherapp.types.GetFavouriteLocationOutput;
+import com.proit.weatherapp.dto.types.GetFavouriteLocationInput;
+import com.proit.weatherapp.dto.types.GetFavouriteLocationOutput;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;

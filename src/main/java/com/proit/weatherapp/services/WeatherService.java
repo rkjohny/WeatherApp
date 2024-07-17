@@ -5,7 +5,7 @@ import com.proit.weatherapp.dto.*;
 import com.proit.weatherapp.security.Authority;
 import com.proit.weatherapp.core.OpenMetroService;
 import com.proit.weatherapp.core.JsonService;
-import com.proit.weatherapp.types.OpenMetroAPIParam;
+import com.proit.weatherapp.dto.types.OpenMetroAPIParam;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.constraints.NotNull;
 import org.apache.commons.lang3.StringUtils;

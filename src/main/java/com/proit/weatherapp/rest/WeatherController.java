@@ -2,7 +2,7 @@ package com.proit.weatherapp.rest;
 
 
 import com.proit.weatherapp.api.WeatherApi;
-import com.proit.weatherapp.types.*;
+import com.proit.weatherapp.dto.types.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

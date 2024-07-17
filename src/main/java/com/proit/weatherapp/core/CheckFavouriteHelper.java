@@ -1,8 +1,8 @@
 package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.services.LocationService;
-import com.proit.weatherapp.types.CheckFavouriteInput;
-import com.proit.weatherapp.types.CheckFavouriteOutput;
+import com.proit.weatherapp.dto.types.CheckFavouriteInput;
+import com.proit.weatherapp.dto.types.CheckFavouriteOutput;
 import com.proit.weatherapp.util.InputValidationUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

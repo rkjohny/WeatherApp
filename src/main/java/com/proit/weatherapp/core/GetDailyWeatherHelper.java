@@ -1,8 +1,8 @@
 package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.services.WeatherService;
-import com.proit.weatherapp.types.GetDailyWeatherInput;
-import com.proit.weatherapp.types.GetDailyWeatherOutput;
+import com.proit.weatherapp.dto.types.GetDailyWeatherInput;
+import com.proit.weatherapp.dto.types.GetDailyWeatherOutput;
 import com.proit.weatherapp.util.InputValidationUtils;
 import com.proit.weatherapp.util.Sanitizer;
 import lombok.RequiredArgsConstructor;

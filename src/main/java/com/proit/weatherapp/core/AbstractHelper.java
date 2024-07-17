@@ -1,7 +1,7 @@
 package com.proit.weatherapp.core;
 
-import com.proit.weatherapp.types.AbstractInput;
-import com.proit.weatherapp.types.AbstractOutput;
+import com.proit.weatherapp.dto.types.AbstractInput;
+import com.proit.weatherapp.dto.types.AbstractOutput;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

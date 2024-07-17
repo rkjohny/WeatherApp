@@ -1,7 +1,7 @@
 package com.proit.weatherapp.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.proit.weatherapp.types.OpenMetroAPIParamValue;
+import com.proit.weatherapp.dto.types.OpenMetroAPIParamValue;
 import com.proit.weatherapp.util.Utils;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

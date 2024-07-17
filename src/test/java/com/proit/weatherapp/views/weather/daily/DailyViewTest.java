@@ -3,7 +3,7 @@ package com.proit.weatherapp.views.weather.daily;
 import com.proit.weatherapp.config.Constant;
 import com.proit.weatherapp.core.OpenMetroService;
 import com.proit.weatherapp.dto.WeatherDataDaily;
-import com.proit.weatherapp.types.CachedData;
+import com.proit.weatherapp.dto.CachedData;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.server.VaadinSession;

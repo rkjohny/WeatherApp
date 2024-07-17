@@ -1,4 +1,4 @@
-package com.proit.weatherapp.types;
+package com.proit.weatherapp.dto.types;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +10,7 @@ import java.io.Serial;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CheckFavouriteOutput extends AbstractOutput {
+public class ToggleFavouriteOutput extends AbstractOutput {
     @Serial
     private static final long serialVersionUID = 1L;
 

@@ -1,4 +1,4 @@
-package com.proit.weatherapp.types;
+package com.proit.weatherapp.dto.types;
 
 public final class OpenMetroAPIParam {
     private OpenMetroAPIParam() {

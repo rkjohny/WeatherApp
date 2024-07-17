@@ -1,8 +1,8 @@
 package com.proit.weatherapp.core;
 
 import com.proit.weatherapp.services.WeatherService;
-import com.proit.weatherapp.types.GetHourlyWeatherInput;
-import com.proit.weatherapp.types.GetHourlyWeatherOutput;
+import com.proit.weatherapp.dto.types.GetHourlyWeatherInput;
+import com.proit.weatherapp.dto.types.GetHourlyWeatherOutput;
 import com.proit.weatherapp.util.InputValidationUtils;
 import com.proit.weatherapp.util.Sanitizer;
 import com.proit.weatherapp.util.Utils;

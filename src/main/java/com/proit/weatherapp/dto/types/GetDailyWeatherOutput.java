@@ -1,6 +1,6 @@
-package com.proit.weatherapp.types;
+package com.proit.weatherapp.dto.types;
 
-import com.proit.weatherapp.dto.Location;
+import com.proit.weatherapp.dto.WeatherDataDaily;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,9 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GetFavouriteLocationOutput extends AbstractOutput {
+public class GetDailyWeatherOutput extends AbstractOutput {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private List<Location> locations = new ArrayList<>();
+    private List<WeatherDataDaily> dataDailies = new ArrayList<>();
 }
