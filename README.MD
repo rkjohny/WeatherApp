@@ -69,7 +69,7 @@ http://localhost:8080/swagger-ui/index.html
 ````
 
 ### Known Issue:
-* Calling API through swagger-ui will return Forbidden (status: 403). This is because authorization issue, since swagger url will not contain the session. Need to work on it.
+* Calling API through swagger-ui will return Forbidden (status: 403). This is because authorization and routing issue. Need to work on it.
 * Building project with <b>Docker</b> works but pages were not server, this is because the licensing issue. Work around: follow the following step
 * Build the project by <b>Maven</b> before running <b>docker build</b> or <b>docker-compose --build</b> because <b>docker build</b> will not build the project.
 
